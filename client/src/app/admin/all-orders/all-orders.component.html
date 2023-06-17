@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search by display name">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchOrders()">Search</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()">Reset</button>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="d-none d-sm-table-cell">ID</th>
+              <th>Buyer Email</th>
+              <th>Order Date</th>
+              <th class="d-none d-sm-table-cell">Delivery Method</th>
+              <th class="d-none d-sm-table-cell">Subtotal</th>
+              <th class="d-none d-sm-table-cell">Shipping Price</th>
+              <th class="d-none d-sm-table-cell">Total</th>
+              <th class="d-none d-sm-table-cell">Payment Method</th>
+              <th >Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders">
+              <td class="d-none d-sm-table-cell">{{ order.id }}</td>
+              <td>{{ order.buyerEmail }}</td>
+              <td>{{ order.orderDate | date: 'short' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.deliveryMethod }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.subtotal | currency:'USD':'symbol-narrow' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.shippingPrice | currency:'USD':'symbol-narrow' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.total | currency:'USD':'symbol-narrow' }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.paymentMethod }}</td>
+              <td>{{ order.status }}</td>
+              <td>
+                <i [routerLink]="['details', order.buyerEmail]" class="material-icons" style="cursor: pointer;">visibility</i>   
+               
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12">
+      <app-pagination [pageIndex]="pageIndex" [pageSize]="pageSize" [totalCount]="totalCount" (pageChanged)="onPageChanged($event)"></app-pagination>
+    </div>
+  </div>
+</div>
