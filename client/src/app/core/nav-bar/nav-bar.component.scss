@@ -8,21 +8,21 @@
     background:#BF9553;
     text-align: center;
     top: -12px;
-    right: 32px;
+    right: -10px;
 }
 
-.cart-no-canvas{
 
-    position: absolute;
-    min-height: 25px;
-    min-width: 25px;
-    border-radius: 50%;
-    color: white;
-    /* color: #967BB6; */
-    background:#BF9553;
-    text-align: center;
-    top: -12px;
-    right: 32px;
+
+.cart-no-canvas{
+  position: absolute;
+  min-height: 12px;
+  min-width: 25px;
+  border-radius: 50%;
+  color: white;
+  background: #BF9553;
+  text-align: center;
+  top: -11px;
+  right: -4px;
 }
 .btn-secondary{
     background:#BF9553;
@@ -63,7 +63,7 @@ a {
 
   /* Additional styles for off-canvas navigation */
   .offcanvas-start {
-    width: 50%;
+    width: 70%;
   }
 
   .offcanvas-collapse {
@@ -117,4 +117,24 @@ a {
 /* Add the following CSS to change the navbar background color */
 .navbar {
   background-color: #522888;
+}
+
+
+
+hr {
+  margin: 0rem 0;
+  color: inherit;
+  border: 0;
+  border-top: 1px solid;
+  opacity: .25;
+}
+
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
 }

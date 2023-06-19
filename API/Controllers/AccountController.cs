@@ -159,7 +159,7 @@ namespace API.Controllers
                 DisplayName = registerDto.DisplayName,
                 Email = registerDto.Email,
                 UserName = registerDto.Email,
-                UserProfilePhoto =  "Content/images/Users/user-default-photo.png" // Default user photo
+                UserProfilePhoto =  "Content/images/Users/default-user.jpg" // Default user photo
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -345,6 +345,11 @@ public IActionResult Upload([FromForm] IFormFile file)
         return StatusCode(500, $"Internal server error: {ex}");
     }
 } */
+
+
+
+
+
 [Authorize]
 [HttpPut("update-user")]
 public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUpdateDto userUpdate)
@@ -353,7 +358,7 @@ public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUp
     if (user == null) return NotFound("User not found");
 
     // Check if the edited email already exists
-    if (user.Email != userUpdate.Email)
+    if (userUpdate.Email != null && user.Email != userUpdate.Email)
     {
         var emailExists = await _userManager.FindByEmailAsync(userUpdate.Email) != null;
         if (emailExists) return BadRequest("Email already exists");
@@ -362,12 +367,13 @@ public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUp
     // Handle the uploaded file
     if (userUpdate.UserProfilePhoto != null && userUpdate.UserProfilePhoto.Length > 0)
     {
-         var allowedFormats = new[] { ".png",".jpg",".jpeg" };
+        var allowedFormats = new[] { ".png",".jpg",".jpeg" };
         var fileFormat = Path.GetExtension(userUpdate.UserProfilePhoto.FileName).ToLowerInvariant();
         if (!allowedFormats.Contains(fileFormat))
         {
             return BadRequest("Invalid file format. Only PNG files are allowed.");
         }
+        
         // Generate a unique filename
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(userUpdate.UserProfilePhoto.FileName)}";
         
@@ -394,7 +400,7 @@ public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUp
     }
 
     // Update user information
-    user.Email = userUpdate.Email;
+    if (userUpdate.Email != null) user.Email = userUpdate.Email;
     user.DisplayName = userUpdate.DisplayName;
     user.Address = _mapper.Map<AddressDto, Address>(userUpdate.Address);
 
@@ -404,7 +410,6 @@ public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUp
 
     return BadRequest("Problem updating the user");
 }
-
 //Allow user to dlete his account 
 [Authorize]
 [HttpDelete("delete-account")]

@@ -19,7 +19,8 @@ export class NavBarComponent implements OnInit {
   basket$: Observable<Basket>;
   currentUser$: Observable<User>;
   isAdmin$: Observable<boolean>;
-
+  isOffcanvasOpen: boolean = false;
+  public userProfilePhoto: string = '';
   constructor(
     public basketService: BasketService,
     public accountService: AccountService,
@@ -33,11 +34,12 @@ export class NavBarComponent implements OnInit {
     this.basket$ = this.basketService.basketSource$;
     this.currentUser$ = this.accountService.currentUser$;
     this.isAdmin$ = this.accountService.isAdmin$;
+    this.getUserProfilePhoto();
   }
 
   getBrands() {
     this.shopService.getBrands().subscribe({
-      next: response => this.brands = [{id: 0, name: 'All'}, ...response],
+      next: response => this.brands = [{id: 0, name: 'الجميع'}, ...response],
       error: error => console.log(error)
     })
   }
@@ -49,4 +51,20 @@ export class NavBarComponent implements OnInit {
   onBrandSelected(brandId: number) {
     this.shopService.setBrandId(brandId);
   }
+
+  toggleOffcanvas() {
+    this.isOffcanvasOpen = !this.isOffcanvasOpen;
+  }
+  async getUserProfilePhoto() {
+    try {
+      const userSettingObservable = await this.accountService.getCurrentUserForSetting();
+      userSettingObservable.subscribe(userSetting => {
+        this.userProfilePhoto = userSetting.userProfilePhoto;
+        console.log(this.userProfilePhoto);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
+

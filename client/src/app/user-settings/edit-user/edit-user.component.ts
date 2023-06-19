@@ -21,15 +21,17 @@ preview: string | ArrayBuffer;
     private toastr: ToastrService
   ) {
     this.editUserForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      displayName: ['', Validators.required],
+      email: [''],
+      displayName: [''],
       userProfilePhoto: [''],
       address: this.fb.group({
         firstName: [''],
         lastName: [''],
-        street: [''],
+        state: ['العراق'],
         city: [''],
-        state: [''],
+        street: [''],
+     
+       
         zipcode: [''],
       }),
     });
@@ -49,9 +51,9 @@ preview: string | ArrayBuffer;
           address: {
             firstName: this.user.address?.firstName,
             lastName: this.user.address?.lastName,
-            street: this.user.address?.street,
+            state: this.user.address?.state ? this.user.address?.state : 'العراق',
             city: this.user.address?.city,
-            state: this.user.address?.state,
+            street: this.user.address?.street,
             zipcode: this.user.address?.zipcode,
           },
         });
@@ -98,18 +100,18 @@ preview: string | ArrayBuffer;
     
       this.accountService.updateUserInformation(formData).subscribe(
         (response) => {
-          console.log('User information updated successfully:', response);
-          this.toastr.success('User information updated successfully');
+      
+          this.toastr.success('تم تحديث معلومات المستخدم بنجاح');
           this.router.navigate(['/user-settings']);
         },
         (error) => {
-          console.error('Failed to update user information:', error);
-          this.toastr.error('Failed to update user information');
+        
+          this.toastr.error('فشل تحديث معلومات المستخدم. تأكد من أنك قمت بملء جميع الحقول المطلوبة');
         }
       );
     } else {
-      console.log('The form is not valid.');
-      this.toastr.error('The form is not valid.');
+ 
+      this.toastr.error('فشل تحديث معلومات المستخدم. تأكد من أنك قمت بملء جميع الحقول المطلوبة');
     }
   }
 }

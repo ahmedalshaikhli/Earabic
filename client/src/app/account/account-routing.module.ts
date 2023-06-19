@@ -7,11 +7,32 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 
 
 const routes: Routes = [
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
-  { path: 'reset-password', component: ResetPasswordComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-]
+  {
+    path: '',
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent,
+        data: { breadcrumb: { skip: true } }
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
+        data: { breadcrumb: { skip: true } }
+      },
+      {
+        path: 'reset-password',
+        component: ResetPasswordComponent,
+        data: { breadcrumb: { skip: true } }
+      },
+      {
+        path: 'forgot-password',
+        component: ForgotPasswordComponent,
+        data: { breadcrumb: { skip: true } }
+      }
+    ]
+  }
+];
 
 @NgModule({
   declarations: [],
