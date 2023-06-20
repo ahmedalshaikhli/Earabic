@@ -1,21 +1,17 @@
 <div class="container">
   <div class="row" *ngIf="types.length > 0 && brands.length > 0">
     <section class="col-lg-3 col-md-4 d-none d-md-block">
-      <!-- Sort section -->
-      <h5 class="gold-text ms-3">Sort</h5>
-      <span class="material-symbols-outlined">
-        settings
-        </span>
-      <select class="form-select mb-4" (change)="onSortSelected($event)">
-        <option *ngFor="let sort of sortOptions" 
-          [selected]="shopParams.sort === sort.value"
-          [value]="sort.value">
-          {{sort.name}}
-        </option>
+
+  
+      <select class="form-select mb-4 " (change)="onSortSelected($event)" [(ngModel)]="shopParams.sort">
+        <option *ngFor="let sort of sortOptions" [value]="sort.value">{{sort.name}}</option>
       </select>
+   
+
+
 
       <!-- Brands section -->
-      <h5 class="gold-text ms-3">Brands</h5>
+      <!-- <h5 class="gold-text ms-3">الفئات</h5> -->
       <ul class="list-group my-3">
         <li class="list-group-item"
           *ngFor="let brand of brands"
@@ -24,9 +20,9 @@
           (click)="onBrandSelected(brand.id)">{{brand.name}}
         </li>
       </ul>
-
+<hr>
       <!-- Types section -->
-      <h5 class="gold-text ms-3">Types</h5>
+    <!--   <h5 class="gold-text ms-3">Types</h5> -->
       <ul class="list-group my-3">
         <li class="list-group-item"
           *ngFor="let type of types"
@@ -39,20 +35,19 @@
 
     <!-- Products section -->
     <section class="col-lg-9 col-md-8">
-      <div class="d-flex justify-content-between align-items-center pb-2">
+      <div class="d-flex justify-content-between align-items-center pb-3">
         <app-paging-header
           [totalCount]="totalCount"
           [pageNumber]="shopParams.pageNumber"
           [pageSize]="shopParams.pageSize"
         ></app-paging-header>
 
-        <div class="d-flex mt-2">
-          <input (keyup.enter)="onSearch()" type="text" placeholder="Search" class="form-control me-2" #search>
-          <button (click)="onSearch()" class="btn btn-outline-primary mx-2">Search</button>
-          <button (click)="onReset()" class="btn btn-outline-secondary">Reset</button>
+        <div class="d-flex">
+          <input (keyup.enter)="onSearch()" type="text" placeholder="بحث" class="form-control me-2" #search>
+          <button (click)="onSearch()" class="btn btn-outline-primary mx-2">بحث</button>
+          <button (click)="onReset()" class="btn btn-outline-secondary">الغاء</button>
         </div>
       </div>
-
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-4">
         <div class="col-6 col-md-4 col-lg-4" *ngFor="let product of products">
           <app-product-item [product]="product"></app-product-item>

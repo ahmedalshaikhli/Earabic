@@ -17,9 +17,9 @@ export class ShopComponent implements OnInit {
   types: Type[] = [];
   shopParams: ShopParams;
   sortOptions = [
-    {name: 'Alphabetical', value: 'name'},
-    {name: 'Price: Low to high', value: 'priceAsc'},
-    {name: 'Price: High to low', value: 'priceDesc'},
+    {name: 'ترتيب أبجدي', value: 'name'},
+    {name: 'السعر: من الأقل إلى الأعلى', value: 'priceAsc'},
+    {name: 'السعر: من الأعلى إلى الأقل', value: 'priceDesc'},
   ];
   totalCount = 0;
 

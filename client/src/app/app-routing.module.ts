@@ -11,7 +11,7 @@ import { EditUserComponent } from './user-settings/edit-user/edit-user.component
 
 const routes: Routes = [
  /*  {path: '', component: HomeComponent, data: {breadcrumb: 'Home'}}, */
- {path: '', redirectTo: 'shop', pathMatch: 'full'},
+ {path: '', redirectTo: 'shop', pathMatch: 'full', data: {breadcrumb: 'الرئسية'}},
   {path: 'test-error', component: TestErrorComponent},
  /*  {path: 'not-found', component: NotFoundComponent}, */
   {path: 'server-error', component: ServerErrorComponent},

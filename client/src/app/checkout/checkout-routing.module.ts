@@ -4,7 +4,7 @@ import { CheckoutSuccessComponent } from './checkout-success/checkout-success.co
 import { CheckoutComponent } from './checkout.component';
 
 const routes: Routes = [
-  {path: '', component: CheckoutComponent},
+  {path: '', component: CheckoutComponent, data: { breadcrumb: { skip: false, label: 'الدفع' } } },
   {path: 'success', component: CheckoutSuccessComponent},
 ]
 

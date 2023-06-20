@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container pb-3">
   <ng-container *ngIf="totalOrders !== undefined && totalCount !== undefined && totalUsersCount !== undefined">
     <div class="row">
       <div class="col-lg-3 col-md-6 col-sm-6">
@@ -13,12 +13,12 @@
             <p class="category"><strong>Visits</strong></p>
             <h3 class="card-title">1000,1</h3>
           </div>
-          <div class="card-footer">
+ <!--          <div class="card-footer">
             <div class="stats">
               <i class="material-icons text-info">info</i>
               <a href="#pablo">See detailed report</a>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
@@ -32,11 +32,11 @@
             <p class="category"><strong>Orders</strong></p>
             <h3 class="card-title">{{ totalOrders }}</h3>
           </div>
-          <div class="card-footer">
+   <!--        <div class="card-footer">
             <div class="stats">
               <i class="material-icons">local_offer</i> Product-wise sales
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
@@ -50,11 +50,11 @@
             <p class="category"><strong>Total Products</strong></p>
             <h3 class="card-title">{{ totalCount }}</h3>
           </div>
-          <div class="card-footer">
+<!--           <div class="card-footer">
             <div class="stats">
               <i class="material-icons">date_range</i> Weekly sales
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div class="col-lg-3 col-md-6 col-sm-6">
@@ -68,11 +68,11 @@
             <p class="category"><strong>Users</strong></p>
             <h3 class="card-title">{{ totalUsersCount }}</h3>
           </div>
-          <div class="card-footer">
+  <!--         <div class="card-footer">
             <div class="stats">
               <i class="material-icons">update</i> Just Updated
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

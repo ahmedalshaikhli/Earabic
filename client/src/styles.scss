@@ -161,3 +161,8 @@ fieldset:disabled .btn.btn-primary {
 body {
   font-family: 'Noto Kufi Arabic', sans-serif;
 }
+
+.form-check-input:checked {
+  background-color: #522888;
+  border-color: #522888;
+}
