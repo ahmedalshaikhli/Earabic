@@ -29,7 +29,7 @@ const routes: Routes = [
       { path: 'users-list/edit/:id', component: UserEditComponent },
       { path: 'users-list/details/:id', component: UserDetailsComponent },
       { path: 'all-orders', component: AllOrdersComponent,  data: { breadcrumb: { skip: false, label: ' الطلبات' } } },
-      { path: 'all-orders/details/:email', component: AllOrderDetailsComponent },
+      { path: 'all-orders/details/:email', component: AllOrderDetailsComponent ,  data: { breadcrumb: { skip: false, label: 'الطلب' } } },
     ],
   },
 

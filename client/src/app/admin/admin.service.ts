@@ -63,7 +63,7 @@ export class AdminService {
 
     if(user) return of(user);
   
-    return this.http.get<User>(this.baseUrl + 'account/edit' + id);
+    return this.http.get<User>(this.baseUrl + 'account/edit/' + id);
   }
 
 

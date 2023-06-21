@@ -18,7 +18,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { AllOrderDetailsComponent } from './all-orders/all-order-details/all-order-details.component';
 
-
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 
 
@@ -29,7 +29,8 @@ import { AllOrderDetailsComponent } from './all-orders/all-order-details/all-ord
     CommonModule,
     SharedModule,
     AdminRoutingModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    CKEditorModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

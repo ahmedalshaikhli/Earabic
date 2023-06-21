@@ -1,44 +1,66 @@
 <div *ngIf="order" class="container">
-  <h2>Order Details</h2>
+ 
   <div class="row">
     <div class="col-md-6">
-      <p><strong>Order ID:</strong> {{ order.id }}</p>
-      <p><strong>Buyer Email:</strong> {{ order.buyerEmail }}</p>
-      <p><strong>Order Date:</strong> {{ order.orderDate | date }}</p>
-      <p><strong>Shipping Address:</strong></p>
-      <ul>
-        <li><strong>First Name:</strong> {{ order.shipToAddress.firstName }}</li>
-        <li><strong>Last Name:</strong> {{ order.shipToAddress.lastName }}</li>
-        <li><strong>Street:</strong> {{ order.shipToAddress.street }}</li>
-        <li><strong>City:</strong> {{ order.shipToAddress.city }}</li>
-        <li><strong>State:</strong> {{ order.shipToAddress.state }}</li>
-        <li><strong>Zip Code:</strong> {{ order.shipToAddress.zipCode }}</li>
-      </ul>
-      <p><strong>Delivery Method:</strong> {{ order.deliveryMethod }}</p>
-      <p><strong>Shipping Price:</strong> {{ order.shippingPrice | currency }}</p>
+      <div class="card">
+        <div class="card-header">
+          <h4>معلومات الطلب</h4>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><strong>رقم الطلب:</strong> {{ order.id }}</li>
+          <li class="list-group-item"><strong>البريد الإلكتروني للمشتري:</strong> {{ order.buyerEmail }}</li>
+          <li class="list-group-item"><strong>تاريخ الطلب:</strong> {{ order.orderDate | date }}</li>
+          <li class="list-group-item"><strong>عنوان الشحن:</strong>
+            <ul class="list-unstyled">
+              <li><strong>الاسم الأول:</strong> {{ order.shipToAddress.firstName }}</li>
+              <li><strong>الاسم الأخير:</strong> {{ order.shipToAddress.lastName }}</li>
+              <li><strong>الشارع:</strong> {{ order.shipToAddress.street }}</li>
+              <li><strong>المدينة:</strong> {{ order.shipToAddress.city }}</li>
+              <li><strong>الدولة:</strong> {{ order.shipToAddress.state }}</li>
+              <li><strong>الرمز البريدي:</strong> {{ order.shipToAddress.zipCode }}</li>
+            </ul>
+          </li>
+          <li class="list-group-item"><strong>طريقة التوصيل:</strong> {{ order.deliveryMethod }}</li>
+          <li class="list-group-item"><strong>سعر الشحن:</strong> {{ order.shippingPrice | currency }}</li>
+        </ul>
+      </div>
     </div>
     <div class="col-md-6">
-      <h3>Order Items:</h3>
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Product Name</th>
-            <th>Price</th>
-            <th>Quantity</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of order.orderItems">
-            <td>{{ item.productName }}</td>
-            <td>{{ item.price | currency }}</td>
-            <td>{{ item.quantity }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <p><strong>Subtotal:</strong> {{ order.subtotal | currency }}</p>
-      <p><strong>Payment Method:</strong> {{ order.paymentMethod }}</p>
-      <p><strong>Total:</strong> {{ order.total | currency }}</p>
-      <p><strong>Status:</strong> {{ order.status }}</p>
+      <div class="card">
+        <div class="card-header">
+          <h4>عناصر الطلب</h4>
+        </div>
+        <div class="card-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>اسم المنتج</th>
+                <th>السعر</th>
+                <th>الكمية</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of order.orderItems">
+                <td>{{ item.productName }}</td>
+                <td>{{ item.price | currency }}</td>
+                <td>{{ item.quantity }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer">
+          <p><strong>المجموع الفرعي:</strong> {{ order.subtotal | currency }}</p>
+          <p><strong>طريقة الدفع:</strong> {{ order.paymentMethod }}</p>
+          <p><strong>المجموع:</strong> {{ order.total | currency }}</p>
+          <p><strong>الحالة:</strong> {{ order.status }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+
+
+
+
+

@@ -1,39 +1,35 @@
-
-
 <div class="container ">
   <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm.valid && productForm.value)">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="name">Product Name</label>
+          <label for="name">اسم المنتج</label>
           <input
             [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
             required
             type="text"
             class="form-control"
             id="name"
-            placeholder="Product Name"
             name="name"
             #name="ngModel"
             [(ngModel)]="product.name"
           >
           <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
             <div *ngIf="name.errors.required">
-              Product Name is required
+              اسم المنتج مطلوب
             </div>
           </div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="price">Price</label>
+          <label for="price">السعر</label>
           <input
             [ngClass]="{'is-invalid': price.invalid && (price.dirty || price.touched)}"
             required
             type="text"
             class="form-control"
             id="price"
-            placeholder="Price"
             currencyMask
             name="price"
             #price="ngModel"
@@ -44,39 +40,39 @@
           >
           <div *ngIf="price.invalid && (price.dirty || price.touched)" class="invalid-feedback">
             <div *ngIf="price.errors.required">
-              Product price is required
+              سعر المنتج مطلوب
             </div>
             <div *ngIf="price.errors.pattern">
-              Product price needs to be a decimal value
+              يجب أن يكون سعر المنتج قيمة عشرية
             </div>
             <div *ngIf="price.errors.min">
-              Product price must be greater than zero
+              يجب أن يكون سعر المنتج أكبر من الصفر
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <label for="description">Description</label>
-      <textarea
-        [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}"
-        required
-        #description="ngModel"
-        class="form-control"
-        id="description"
-        [(ngModel)]="product.description"
-        name="description"
-        rows="3"></textarea>
-      <div *ngIf="description.invalid && (description.dirty || description.touched)" class="invalid-feedback">
-        <div *ngIf="description.errors.required">
-          Product description is required
-        </div>
-      </div>
-    </div>
+    <div>
+      <div class="form-group">
+       <br>
+      <ckeditor
+      [editor]="Editor"
+      [config]="{ 
+        placeholder: 'وصف المنتج...', 
+        language: 'ar'
+    }"
+      [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}"
+      required
+      #description="ngModel"
+      [(ngModel)]="product.description"
+      name="description">
+    </ckeditor>
+  </div>
+  </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="brand">Brand</label>
+          <label for="brand"> الفئة</label>
           <select id="brand" class="form-control" name="productBrandId" [(ngModel)]="product.productBrandId" required>
             <option *ngFor="let brand of brands"
                     [selected]="product.productBrandId === brand.id"
@@ -86,7 +82,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="type">Type</label>
+          <label for="type">النوع</label>
           <select id="type" class="form-control" name="productTypeId" [(ngModel)]="product.productTypeId" required>
             <option *ngFor="let type of types"
                     [selected]="product.productTypeId === type.id"
@@ -95,6 +91,6 @@
         </div>
       </div>
     </div>
-    <button [disabled]="!productForm.valid" type="submit" class="btn btn-primary my-3">Submit</button>
+    <button [disabled]="!productForm.valid" type="submit" class="btn btn-primary my-3">حفظ</button>
   </form>
 </div>

@@ -45,6 +45,7 @@ export class AllOrdersComponent implements OnInit {
         (response: any) => {
           this.orders = response.orders;
           this.totalCount = response.totalCount;
+          console.log( this.orders)
         },
         (error: any) => {
           this.errorMessage = error.message;

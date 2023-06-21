@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import { Brand } from 'src/app/shared/models/brand';
 import { ProductFormValues } from 'src/app/shared/models/product';
 import { AdminService } from '../../admin.service';
-
+import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-edit-product-form',
@@ -15,7 +15,7 @@ export class EditProductFormComponent implements OnInit {
   @Input() product !: ProductFormValues;
   @Input() brands: Brand[];
   @Input() types: Type[];
-
+  public Editor = ClassicEditor as any; 
   constructor(private route: ActivatedRoute, private adminService: AdminService, private router: Router) { }
 
   ngOnInit(): void {

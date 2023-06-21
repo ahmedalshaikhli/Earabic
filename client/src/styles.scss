@@ -150,6 +150,26 @@ fieldset:disabled .btn.btn-primary {
   font-weight: normal;
   font-style: normal;
 }
+body {
+  font-family: 'Noto Kufi Arabic', sans-serif;
+  font-size: 16px;
+}
+
+//font 
+.font-title-h1 {
+  font-size: 16px;
+}
+
+/* Media query for mobile screens */
+@media (max-width: 767px) {
+  .font-title-h1{
+      font-size: 14px;
+  }
+  body {
+    font-family: 'Noto Kufi Arabic', sans-serif;
+    font-size: 14px;
+  }
+}
 
 .user-avatar {
   border: 3px solid #f8f9fa;
@@ -158,9 +178,7 @@ fieldset:disabled .btn.btn-primary {
   width: 75px;
   height: 75px;
 }
-body {
-  font-family: 'Noto Kufi Arabic', sans-serif;
-}
+
 
 .form-check-input:checked {
   background-color: #522888;

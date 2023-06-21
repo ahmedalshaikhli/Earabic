@@ -2,9 +2,9 @@
   <div class="container">
     <ng-container *ngIf="!addPhotoMode">
       <div class="d-flex justify-content-between mb-3">
-        <h3>Product Photos</h3>
+        <h3>صور المنتج</h3>
         <button class="btn btn-primary" (click)="addPhotoModeToggle()">
-          Add New Photo
+          إضافة صورة جديدة
         </button>
       </div>
       <div class="row">
@@ -16,7 +16,7 @@
                       (click)="setMainPhoto(photo.id)"
                       [disabled]="photo.isMain"
                       class="{{photo.isMain ? 'btn btn-primary' : 'btn btn-outline-primary'}}"
-                      style="width: 50%">Set Main
+                      style="width: 50%">صورة رئيسية
               </button>
               <button
                 (click)="deletePhoto(photo.id)"
@@ -32,8 +32,8 @@
     </ng-container>
     <ng-container *ngIf="addPhotoMode">
       <div class="d-flex justify-content-between mb-3">
-        <h3 class="text-primary-purble">Add new product image</h3>
-        <button class="btn btn-outline-secondary" (click)="addPhotoModeToggle()">Cancel</button>
+        <h3 class="text-primary-purble">أضف صورة منتج جديد</h3>
+        <button class="btn btn-outline-secondary" (click)="addPhotoModeToggle()">إلغاء</button>
       </div>
       <div class="progress form-group" *ngIf="progress > 0">
         <div class="progress-bar progress-bar-striped bg-success" role="progressbar" [style.width.%]="progress">
