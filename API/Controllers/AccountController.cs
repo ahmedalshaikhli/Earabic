@@ -185,13 +185,13 @@ public async Task<ActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordD
     if (user == null) return NotFound(new ApiResponse(404, "User not found"));
 
     var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-    var frontEndUrl = "https://localhost:5001/account"; // Replace this with your front-end URL
+    var frontEndUrl = "http://142.93.161.58/account"; // Replace this with your front-end URL
     var resetLink = $"{frontEndUrl}/reset-password?email={HttpUtility.UrlEncode(user.Email)}&token={HttpUtility.UrlEncode(token)}";
 
     // Send the reset link via email
-    await _emailSender.SendEmailAsync(user.Email, "Reset Password", $"Please reset your password by clicking [here]({resetLink}) this process is vaild for 15 minutes only");
+        await _emailSender.SendEmailAsync(user.Email, "إعادة تعيين كلمة المرور", $"عزيزي المستخدم،\n\nيرجى إعادة تعيين كلمة المرور الخاصة بك عن طريق النقر على الرابط التالي. يُسمح بهذه العملية لمدة 15 دقيقة فقط.\n\n{resetLink}\n\nأطيب التحيات");
 
-    return Ok("Password reset email has been sent");
+    return Ok("تم إرسال رسالة إعادة تعيين كلمة المرور");
 }
 
 [HttpPost("reset-password")]
@@ -218,11 +218,11 @@ public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordViewModel
     if (!result.Succeeded)
     {
         // Return an error if the password reset failed
-        return BadRequest("Failed to reset password.");
+        return BadRequest("فشلت عملية إعادة تعيين كلمة المرور");
     }
 
     // Return a JSON response with the success message
-    return Ok(new { message = "Password successfully reset." });
+    return Ok(new { message = "تم إعادة تعيين كلمة المرور بنجاح" });
 }
 
 

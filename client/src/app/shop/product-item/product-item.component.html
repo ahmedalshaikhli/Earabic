@@ -1,7 +1,7 @@
 <article *ngIf="product" class="block product no-border z-depth-2-top z-depth-2--hover">
   <div class="block-image">
     <div class="d-flex justify-content-center mt-3 ">
-      <a [routerLink]="'/shop/' + product.id" attr.aria-label="'View ' + product.name">
+      <a [routerLink]="'/shop/' + product.id" aria-label="'View ' + product.name">
         <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center img-fluid custom-image-height">
       </a>
     </div>
@@ -9,7 +9,7 @@
   </div>
   <div class="block-body text-center">
     <h3 class="heading heading-5 strong-600 text-capitalize ">
-      <a class="custom-font-size" [routerLink]="'/shop/' + product.id" attr.aria-label="'View ' + product.name">
+      <a class="custom-font-size" [routerLink]="'/shop/' + product.id" aria-label="'View ' + product.name">
         {{product.name | slice:0:25}}
       </a>
     </h3>
@@ -19,12 +19,12 @@
     <div class="product-buttons ">
       <div class="row align-items-center">
         <div class="col-6 text-start">
-          <a href="javascript:void(0)" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Share" (click)="openShareDialog(product)" attr.aria-label="'Share ' + product.name">
+          <a href="javascript:void(0)" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Share" (click)="openShareDialog(product)" aria-label="'Share ' + product.name">
             <i class="fa fa-share"></i>
           </a>
         </div>
         <div class="col-6 text-end">
-          <button type="button" (click)="addItemToBasket()" class="btn btn-block btn-primary btn-circle btn-icon-left" attr.aria-label="'Add ' + product.name + ' to cart'">
+          <button type="button" (click)="addItemToBasket()" class="btn btn-block btn-primary btn-circle btn-icon-left" aria-label="'Add ' + product.name + ' to cart'">
             <i class="fa fa-shopping-cart"></i> 
           </button>
         </div>

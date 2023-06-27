@@ -1,28 +1,68 @@
-<div class="container">
+
+<div class="container mt-3">
   <div class="row" *ngIf="types.length > 0 && brands.length > 0">
-    <section class="col-lg-3 col-md-4 d-none d-md-block">
-
-  
-      <select class="form-select mb-4 " (change)="onSortSelected($event)" [(ngModel)]="shopParams.sort">
-        <option *ngFor="let sort of sortOptions" [value]="sort.value">{{sort.name}}</option>
-      </select>
-   
-
-
-
-      <!-- Brands section -->
-      <!-- <h5 class="gold-text ms-3">الفئات</h5> -->
-      <ul class="list-group my-3">
-        <li class="list-group-item"
+    <div class="col-sm-12">
+      <div class="horizontal-scroll d-sm-block d-md-none">
+        <ul class="list-inline">
+          <li class="list-inline-item btn btn-outline-primary btn-sm custom-btn"
           *ngFor="let brand of brands"
           [class.active]="brand.id === shopParams.brandId"
           [value]="brand.id"
           (click)="onBrandSelected(brand.id)">{{brand.name}}
+      </li>
+        </ul>
+        <div class="scroll-indicator"></div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row" *ngIf="types.length > 0 && brands.length > 0">
+    <div class="col-sm-12">
+      <div class="horizontal-scroll d-sm-block d-md-none">
+        <ul class="list-inline">
+          <li class="list-inline-item btn btn-outline-primary btn-sm custom-btn"
+          *ngFor="let type of types"
+          [class.active]="type.id === shopParams.typeId"
+          [value]="type.id"
+          (click)="onTypeSelected(type.id)">{{type.name}}
         </li>
-      </ul>
-<hr>
-      <!-- Types section -->
-    <!--   <h5 class="gold-text ms-3">Types</h5> -->
+        </ul>
+        <div class="scroll-indicator"></div>
+ 
+
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+
+  <div class="row" *ngIf="types.length > 0 && brands.length > 0">
+    <section class="col-lg-3 col-md-4 d-none d-md-block">
+
+      <select class="form-select mb-2" (change)="onSortSelected($event)" [(ngModel)]="shopParams.sort">
+        <option *ngFor="let sort of sortOptions" [value]="sort.value">{{sort.name}}</option>
+      </select>
+
+      <div class="horizontal-scroll">
+        <ul class="list-group my-3">
+          <li class="list-group-item"
+            *ngFor="let brand of brands"
+            [class.active]="brand.id === shopParams.brandId"
+            [value]="brand.id"
+            (click)="onBrandSelected(brand.id)">{{brand.name}}
+          </li>
+        </ul>
+      </div> 
+
+      <hr>
+
       <ul class="list-group my-3">
         <li class="list-group-item"
           *ngFor="let type of types"
@@ -33,27 +73,34 @@
       </ul>
     </section>
 
-    <!-- Products section -->
     <section class="col-lg-9 col-md-8">
-      <div class="d-flex justify-content-between align-items-center pb-3">
-        <app-paging-header
-          [totalCount]="totalCount"
-          [pageNumber]="shopParams.pageNumber"
-          [pageSize]="shopParams.pageSize"
-        ></app-paging-header>
-
-        <div class="d-flex">
-          <input (keyup.enter)="onSearch()" type="text" placeholder="بحث" class="form-control me-2" #search>
-          <button (click)="onSearch()" class="btn btn-outline-primary mx-2">بحث</button>
-          <button (click)="onReset()" class="btn btn-outline-secondary">الغاء</button>
+      <div class="row">
+        <div class="col-12 col-sm-12 col-md-8 d-flex align-items-center">
+            <div class="input-group">
+                <input (keyup.enter)="onSearch()" type="text" placeholder="بحث" class="form-control" #search>
+                <button (click)="onSearch()" class="btn btn-outline-secondary">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
         </div>
+        <div class="col-12 d-md-none d-flex align-items-center mt-2">
+          <div>
+              <select class="form-select mb-2" style="width: 60%;" (change)="onSortSelected($event)" [(ngModel)]="shopParams.sort">
+                  <option *ngFor="let sort of sortOptions" [value]="sort.value">{{sort.name}}</option>
+              </select>
+          </div>
       </div>
+    </div>
       <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-4">
         <div class="col-6 col-md-4 col-lg-4" *ngFor="let product of products">
           <app-product-item [product]="product"></app-product-item>
         </div>
       </div>
-
+      <app-paging-header
+        [totalCount]="totalCount"
+        [pageNumber]="shopParams.pageNumber"
+        [pageSize]="shopParams.pageSize"
+      ></app-paging-header>
       <div class="d-flex justify-content-center" *ngIf="totalCount > 0">
         <app-pager
           [totalCount]="totalCount"
@@ -63,9 +110,6 @@
         ></app-pager>
       </div>
     </section>
+    
   </div>
 </div>
-
-
-
-

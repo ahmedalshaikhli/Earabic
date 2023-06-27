@@ -10,6 +10,30 @@
     top: -12px;
     right: -10px;
 }
+.cart-no-small-1{
+  position: absolute;
+  min-height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  color: white;
+  background: #BF9553;
+  font-size: 13px;
+  text-align: center;
+  top: -13px;
+  left: 2px;
+}
+.cart-no-nav-small{
+  position: absolute;
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 50%;
+  color: white;
+  /* color: #967BB6; */
+  background:#BF9553;
+  text-align: center;
+  top: -12px;
+  right: -10px;
+}
 
 
 
@@ -117,6 +141,7 @@ a {
 /* Add the following CSS to change the navbar background color */
 .navbar {
   background-color: #522888;
+  
 }
 
 

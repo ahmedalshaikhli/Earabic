@@ -5,7 +5,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { ShopComponent } from './shop.component';
 
 const routes: Routes = [
-  { path: '', component: ShopComponent, data: { breadcrumb: { skip: false, label: 'السوق' } } },
+  { path: '', component: ShopComponent, data: { breadcrumb: { skip: true, label: 'السوق' } } },
   { path: ':id', component: ProductDetailsComponent, data: { breadcrumb: { alias: 'productDetails', label: 'Product  tt' } } }
 ]
 

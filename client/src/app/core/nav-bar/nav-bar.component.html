@@ -1,12 +1,25 @@
 <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
   <div class="container">
       <a class="navbar-brand font-title-h1" style="color:white" href="#">  السوق الالكتروني</a>
-   
+      <ul class="navbar-nav ms-5 mt-2 d-block d-md-none">
+        <li class="nav-item ms-4">
+            <a routerLink="/basket" class="position-relative" >
+                <i class="fa fa-shopping-cart fa-1x text-light"style="font-size: 20px;"></i>
+                <div *ngIf="(basketService.basketSource$ | async) as basket" class="cart-no-small-1">
+                    {{ getCount(basket.items) }}
+                </div>
+            </a>
+        </li>
+    </ul>
+    <ul class="navbar-nav  mt-2 d-block d-md-none  ">
+        <li class="nav-item  me-3">
+            <a class="nav-link" routerLink="/account/login"><i class="fa fa-user fa-1x text-light" style="font-size: 20px;"></i></a>
+        </li>
+    </ul>
       <button class="navbar-toggler collapsed" type="button" onclick="toggleOffcanvas()" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
       <div class="navbar-collapse collapse" id="navbarColor01" >
-
         <ul class="navbar-nav me-start">
             <li class="nav-item">
                 <a routerLink="/basket" class="position-relative">
@@ -17,6 +30,7 @@
                 </a>
             </li>
         </ul>
+ 
           <ul class="navbar-nav me-auto">
         
               <li class="nav-item">
@@ -44,19 +58,16 @@
           <ng-container *ngIf="(accountService.currentUser$ | async) === null">
               <ul class="navbar-nav">
                   <li class="nav-item">
-                      <a class="nav-link" routerLink="/account/login"><i class="material-icons"> login</i><span>  تسجيل الدخول </span> </a>
+                      <a class="nav-link" routerLink="/account/login"><span>  تسجيل الدخول </span> </a>
                   </li>
                   <li class="nav-item">
-                      <a class="nav-link" routerLink="/account/register"><i class="material-icons"> app_registration</i><span> إنشاء حساب </span> </a>
+                      <a class="nav-link" routerLink="/account/register"><span> إنشاء حساب </span> </a>
                       
                   </li>
               </ul>
           </ng-container>
 
-          <!-- <form class="d-flex">
-              <input class="form-control me-sm-2" type="search" placeholder="بحث">
-              <button class="btn btn-secondary my-2 my-sm-0" type="submit">بحث</button>
-          </form> -->
+      
           <ng-container *ngIf="accountService.currentUser$ | async as user">
               <div class="dropdown ms-3 me-5" style="cursor: pointer;" dropdown>
                   <a dropdownToggle class="dropdown-toggle text-light">

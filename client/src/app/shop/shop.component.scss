@@ -22,5 +22,49 @@
 }
 
 
+.horizontal-scroll {
+    overflow-x: scroll;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Enable touch scrolling on iOS devices */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    -ms-overflow-style: none; /* Hide scrollbar for IE and Edge */
+    position: relative;
+  }
 
- 
+  .scroll-indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 8px;
+    background-color: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .horizontal-scroll:hover .scroll-indicator {
+    opacity: 1;
+  }
+
+  .horizontal-scroll::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Opera */
+  }
+
+
+  .container .horizontal-scroll .list-inline-item.active {
+    font-weight: bold;
+    color: #fff; /* Customize the active item color as needed */
+  }
+
+
+  @media (max-width: 768px) { // Change this value according to your breakpoint
+    .hide-on-small {
+        display: none;
+    }
+}
+
+
+.custom-btn {
+  font-size: 0.8rem; /* Change as per your requirement */
+}
+

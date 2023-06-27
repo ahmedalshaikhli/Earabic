@@ -1,3 +1,4 @@
+<app-section-header></app-section-header> 
 <div class="container">
     <div class="row" *ngIf="product">
       <div class="col-md-6">
@@ -8,7 +9,8 @@
         <p style="font-size: 2em;">{{product.price | currency}}</p>
   
         <h5 class="text-primary-purble" *ngIf="quantityInBasket > 0">
-          You have {{quantityInBasket}} of this item in your basket
+          لديك {{quantityInBasket}} من هذا المنتج في سلة التسوق الخاصة بك
+
         </h5>
   
         <div class="d-flex justify-content-start align-items-center">

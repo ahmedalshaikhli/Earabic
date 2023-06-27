@@ -6,20 +6,23 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 namespace API.Extensions
 {
     public static class ApplicationServicesExtensions
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection services,
-            IConfiguration config)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddSingleton<IResponseCacheService, ResponseCacheService>();
             services.AddDbContext<StoreContext>(opt =>
             {
                 opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
-            services.AddSingleton<IConnectionMultiplexer>(c => 
+            services.AddSingleton<IConnectionMultiplexer>(c =>
             {
                 var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
                 return ConnectionMultiplexer.Connect(options);
@@ -33,6 +36,20 @@ namespace API.Extensions
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            // Localization configuration
+            var supportedCultures = new[]
+            {
+                new CultureInfo("ar") // Add other supported cultures as needed
+            };
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.DefaultRequestCulture = new RequestCulture("ar");
+                options.SupportedCultures = supportedCultures;
+                options.SupportedUICultures = supportedCultures;
+            });
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = actionContext =>
@@ -53,7 +70,7 @@ namespace API.Extensions
 
             services.AddCors(opt =>
             {
-                opt.AddPolicy("CorsPolicy", policy => 
+                opt.AddPolicy("CorsPolicy", policy =>
                 {
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://142.93.161.58");
                 });

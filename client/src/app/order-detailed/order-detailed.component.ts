@@ -22,6 +22,7 @@ export class OrderDetailedComponent implements OnInit {
       next: order => {
         this.order = order;
         this.bcService.set('@OrderDetailed', `Order# ${order.id} - ${order.status}`);
+        console.log(order); //
       }
     })
   }

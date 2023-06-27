@@ -9,4 +9,5 @@ export class PagingHeaderComponent {
   @Input() pageNumber?: number;
   @Input() pageSize?: number;
   @Input() totalCount?: number;
+  
 }

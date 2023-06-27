@@ -4,7 +4,6 @@ using Core.Entities.Identity;
 using Infrastructure.Data.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
@@ -23,7 +22,14 @@ namespace API.Extensions
                 opt.UseNpgsql(config.GetConnectionString("IdentityConnection"));
             });
 
-            var builder = services.AddIdentityCore<AppUser>();
+            var builder = services.AddIdentityCore<AppUser>(opt =>
+            {
+             opt.Password.RequireDigit = false;
+opt.Password.RequireNonAlphanumeric = false;
+opt.Password.RequireUppercase = false;
+opt.Password.RequireLowercase = false;
+            });
+
             builder = new IdentityBuilder(builder.UserType, typeof(AppRole), builder.Services);
             builder.AddEntityFrameworkStores<AppIdentityDbContext>();
             builder.AddDefaultTokenProviders();
