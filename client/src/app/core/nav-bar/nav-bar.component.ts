@@ -66,5 +66,7 @@ export class NavBarComponent implements OnInit {
       console.error(error);
     }
   }
+
+  
 }
 

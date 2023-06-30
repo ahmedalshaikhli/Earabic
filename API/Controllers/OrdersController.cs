@@ -12,27 +12,36 @@ namespace API.Controllers
     [Authorize]
     public class OrdersController : BaseApiController
     {
+        private readonly IEmailSender _emailSender;
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
-        public OrdersController(IOrderService orderService, IMapper mapper)
+        public OrdersController(IEmailSender emailSender, IOrderService orderService, IMapper mapper)
         {
+            _emailSender = emailSender;
             _mapper = mapper;
             _orderService = orderService;
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
-        {
-            var email = HttpContext.User.RetrieveEmailFromPrincipal();
+   [HttpPost]
+public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
+{
+    var email = HttpContext.User.RetrieveEmailFromPrincipal();
 
-            var address = _mapper.Map<AddressDto, Address>(orderDto.ShipToAddress);
+    var address = _mapper.Map<AddressDto, Address>(orderDto.ShipToAddress);
 
-            var order = await _orderService.CreateOrderAsync(email, orderDto.DeliveryMethodId, orderDto.BasketId, address, orderDto.PaymentMethod);
+    var order = await _orderService.CreateOrderAsync(email, orderDto.DeliveryMethodId, orderDto.BasketId, address, orderDto.PaymentMethod);
 
-            if (order == null) return BadRequest(new ApiResponse(400, "Problem creating order"));
+    if (order == null) 
+    {
+        return BadRequest(new ApiResponse(400, "Problem creating order"));
+    }
 
-            return Ok(order);
-        }
+    // Email content can be improved and you can use HTML tags to style it
+    var emailConfirmationMessage = $"Dear customer, \n\nYour order was successfully created. \n\nOrder ID: {order.Id}"; 
+    await _emailSender.SendEmailAsync(email, "Order Confirmation", emailConfirmationMessage);
+
+    return Ok(order);
+}
 /*      [HttpGet("all")]
         public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetOrders()
         {
