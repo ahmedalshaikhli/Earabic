@@ -10,7 +10,7 @@ import { environment } from '../../../environments/environment';
 })
 export class ProductItemComponent {
   @Input() product?: IProduct;
-  apiUrl = "http://142.93.161.58";
+  apiUrl = "https://iraqemart.com";
   constructor(private basketService: BasketService) {}
 
   addItemToBasket() {

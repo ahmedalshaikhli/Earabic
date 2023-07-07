@@ -112,7 +112,7 @@
     
     <ng-container *ngIf="accountService.currentUser$ | async as user">
         <div class="d-flex align-items-center mb-2">
-            <img class="user-avatar" [src]="'http://142.93.161.58/' + userProfilePhoto" alt="User Profile Photo">
+            <img class="user-avatar" [src]="'https://iraqemart.com/' + userProfilePhoto" alt="User Profile Photo">
           </div>
       <h5 class="text-center mt-3"> مرحباً {{ user.displayName }}  </h5>
       <a (click)="accountService.logout()" data-bs-dismiss="offcanvas" class="text-center nav-link">
