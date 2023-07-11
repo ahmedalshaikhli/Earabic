@@ -5,6 +5,7 @@ using AutoMapper;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,14 +16,56 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPhotoService _photoService;
-
-        public ProductsController(IUnitOfWork unitOfWork, IMapper mapper , IPhotoService photoService)
+   
+        private readonly ICJDropshippingService _cjDropshippingService;
+        public ProductsController(IUnitOfWork unitOfWork, IMapper mapper , IPhotoService photoService , ICJDropshippingService cjDropshippingService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _photoService = photoService;
+             _cjDropshippingService = cjDropshippingService; 
         }
+      [HttpGet("categories")]
+        public async Task<IActionResult> GetCJDropshippingCategories()
+        {
+            var categories = await _cjDropshippingService.GetCategories();
+            return Ok(categories);
+        }
+    	[HttpGet("external-products")]
+public async Task<ActionResult<PaginatedResult<ProductExternal>>> GetProductsFromExternal(int pageSize = 20, int pageNum = 1)
+{
+    var productExternals = await _cjDropshippingService.GetProductsFromExternal(pageSize, pageNum);
 
+    if (productExternals == null)
+    {
+        return NotFound();
+    }
+
+    var data = _mapper.Map<List<ProductExternal>, List<ProductExternal>>(productExternals.Data);
+    var result = new PaginatedResult<ProductExternal> 
+    {
+        Data = data,
+        PageSize = productExternals.PageSize,
+        PageNum = productExternals.PageNum,
+        TotalCount = productExternals.TotalCount
+    };
+    
+    return Ok(result);
+}
+
+
+     [HttpGet("product-external-details/{pid}")]
+        public async Task<IActionResult> GetProductextExternalDetails(string pid)
+        {
+            var productDetails = await _cjDropshippingService.GetProductDetailsForExternal(pid);
+
+            if (productDetails == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(productDetails);
+        }
        /*  [Cached(600)] */
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(

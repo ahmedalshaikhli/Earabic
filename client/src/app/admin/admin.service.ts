@@ -4,6 +4,7 @@ import {ProductFormValues} from '../shared/models/product';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { User } from '../shared/models/user';
+import { ProductExternal } from '../shared/models/ProductExternal';
 
 
 @Injectable({
@@ -86,6 +87,17 @@ export class AdminService {
   getUserOrderByEmail(buyerEmail:string) {
     return this.http.get<any>(this.baseUrl + 'orders/email/' + buyerEmail);
   }
+  getExternalProducts(pageSize: number = 10, pageNum: number = 0): Observable<any> {
+    const url = `${this.baseUrl}products/external-products`;
+    const params = new HttpParams()
+      .set('pageSize', pageSize.toString())
+      .set('pageNum', pageNum.toString());
   
+    return this.http.get<any>(url, { params });
+  }
+  getPexternalroductDetails(pid: string): Observable<any> {
+    const url = `${this.baseUrl}products/product-external-details/${pid}`;
+    return this.http.get<any>(url);
+  }
 
 }

@@ -19,12 +19,14 @@ import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { AllOrderDetailsComponent } from './all-orders/all-order-details/all-order-details.component';
 
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CJProductsComponent } from './cj-products/cj-products.component';
+import { CjProductDetailsComponent } from './cj-products/cj-product-details/cj-product-details.component';
 
 
 
 
 @NgModule({
-  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent, ProductsListComponent, UsersListComponent, UserEditComponent, UserDetailsComponent, PaginationComponent, DashboardComponent, AllOrdersComponent, AllOrderDetailsComponent],
+  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent, ProductsListComponent, UsersListComponent, UserEditComponent, UserDetailsComponent, PaginationComponent, DashboardComponent, AllOrdersComponent, AllOrderDetailsComponent, CJProductsComponent, CjProductDetailsComponent],
   imports: [
     CommonModule,
     SharedModule,

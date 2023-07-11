@@ -12,6 +12,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { AllOrderDetailsComponent } from './all-orders/all-order-details/all-order-details.component';
+import { CJProductsComponent } from './cj-products/cj-products.component';
+import { CjProductDetailsComponent } from './cj-products/cj-product-details/cj-product-details.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,8 @@ const routes: Routes = [
       { path: 'dashboard', component: DashboardComponent, data: { breadcrumb: { skip: false, label: 'لوحة الاحصائات' } } },
 
       { path: 'products-list', component: ProductsListComponent ,  data: { breadcrumb: { skip: false, label: 'المنتجات' } } },
+      { path: 'products-CJ', component:CJProductsComponent ,  data: { breadcrumb: { skip: false, label: 'المنتجات الخارجية' } } },
+      { path: 'products-CJ/details/:pid', component:CjProductDetailsComponent ,  data: { breadcrumb: { skip: false, label: ' external product details' } } },
       { path: 'users-list', component: UsersListComponent ,  data: { breadcrumb: { skip: false, label: ' المستخدمون' } } },
       {path: 'create', component: EditProductComponent, data: {breadcrumb: 'Create'}},
       {path: 'products-list/edit/:id', component: EditProductComponent, data: {breadcrumb: 'Edit'}},

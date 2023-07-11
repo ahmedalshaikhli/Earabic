@@ -11,7 +11,7 @@ import { BreadcrumbModule } from 'xng-breadcrumb';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { SharedModule } from '../shared/shared.module';
 import { BottomNavBarComponent } from './bottom-nav-bar/bottom-nav-bar.component';
-
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 @NgModule({
   declarations: [
     NavBarComponent,
@@ -24,6 +24,7 @@ import { BottomNavBarComponent } from './bottom-nav-bar/bottom-nav-bar.component
   imports: [
     CommonModule,
     RouterModule,
+    TooltipModule.forRoot(),
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
       preventDuplicates: true

@@ -35,8 +35,9 @@ namespace API.Extensions
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+           services.AddScoped<ICJDropshippingService, CJDropshippingService>(); 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+            services.AddHttpClient();
             // Localization configuration
             var supportedCultures = new[]
             {
@@ -72,7 +73,7 @@ namespace API.Extensions
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://142.93.161.58");
+                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200", "http://142.93.161.58", "https://iraqemart.com");
                 });
             });
 
