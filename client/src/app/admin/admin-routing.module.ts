@@ -5,7 +5,7 @@ import {AdminComponent} from './admin.component';
 import { UsersListComponent } from './users-list/users-list.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 
-import { EditProductComponent } from './products-list/edit-product/edit-product.component';
+
 import { UserEditComponent } from './users-list/user-edit/user-edit.component';
 import { UserDetailsComponent } from './users-list/user-details/user-details.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -14,6 +14,8 @@ import { AllOrdersComponent } from './all-orders/all-orders.component';
 import { AllOrderDetailsComponent } from './all-orders/all-order-details/all-order-details.component';
 import { CJProductsComponent } from './cj-products/cj-products.component';
 import { CjProductDetailsComponent } from './cj-products/cj-product-details/cj-product-details.component';
+import { CreateProductComponent } from './products-list/create-product/create-product.component';
+import { EditProductFormComponent } from './products-list/edit-product-form/edit-product-form.component';
 
 
 const routes: Routes = [
@@ -28,8 +30,8 @@ const routes: Routes = [
       { path: 'products-CJ', component:CJProductsComponent ,  data: { breadcrumb: { skip: false, label: 'المنتجات الخارجية' } } },
       { path: 'products-CJ/details/:pid', component:CjProductDetailsComponent ,  data: { breadcrumb: { skip: false, label: ' external product details' } } },
       { path: 'users-list', component: UsersListComponent ,  data: { breadcrumb: { skip: false, label: ' المستخدمون' } } },
-      {path: 'create', component: EditProductComponent, data: {breadcrumb: 'Create'}},
-      {path: 'products-list/edit/:id', component: EditProductComponent, data: {breadcrumb: 'Edit'}},
+      {path: 'create', component: CreateProductComponent, data: {breadcrumb: 'Create'}},
+      {path: 'products-list/edit/:id', component: EditProductFormComponent, data: {breadcrumb: 'Edit'}},
       { path: 'users-list/edit/:id', component: UserEditComponent },
       { path: 'users-list/details/:id', component: UserDetailsComponent },
       { path: 'all-orders', component: AllOrdersComponent,  data: { breadcrumb: { skip: false, label: ' الطلبات' } } },

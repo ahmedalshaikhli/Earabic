@@ -49,7 +49,7 @@ namespace Infrastructure.Data
                             ProductBrandId = item.ProductBrandId,
                             ProductTypeId = item.ProductTypeId
                         };
-                        product.AddPhoto(item.PictureUrl, pictureFileName);
+                       
                         context.Products.Add(product);
                     }
 

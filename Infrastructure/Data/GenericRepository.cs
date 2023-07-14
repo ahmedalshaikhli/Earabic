@@ -3,12 +3,15 @@ using Core.Interfaces;
 using Core.Specifications;
 using Infrastructue.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
         private readonly StoreContext _context;
+
         public GenericRepository(StoreContext context)
         {
             _context = context;
@@ -53,6 +56,11 @@ namespace Infrastructure.Data
         {
             _context.Set<T>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public async Task AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
         }
 
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)

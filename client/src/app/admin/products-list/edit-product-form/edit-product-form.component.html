@@ -1,19 +1,19 @@
-<div class="container ">
-  <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm.valid && productForm.value)">
+<div class="container">
+  <form #productForm="ngForm" (ngSubmit)="onSubmit(productForm)"  enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
           <label for="name">اسم المنتج</label>
           <input
-            [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
-            required
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            #name="ngModel"
-            [(ngModel)]="product.name"
-          >
+          [ngClass]="{'is-invalid': name.invalid && (name.dirty || name.touched)}"
+          required
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          #name="ngModel"
+          [(ngModel)]="product.name"
+        >
           <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
             <div *ngIf="name.errors.required">
               اسم المنتج مطلوب
@@ -54,25 +54,25 @@
     </div>
     <div>
       <div class="form-group">
-       <br>
-      <ckeditor
-      [editor]="Editor"
-      [config]="{ 
-        placeholder: 'وصف المنتج...', 
-        language: 'ar'
-    }"
-      [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}"
-      required
-      #description="ngModel"
-      [(ngModel)]="product.description"
-      name="description">
-    </ckeditor>
-  </div>
-  </div>
+        <br>
+        <ckeditor
+          [editor]="Editor"
+          [config]="{
+            placeholder: 'وصف المنتج...',
+            language: 'ar'
+          }"
+          [ngClass]="{'is-invalid': description.invalid && (description.dirty || description.touched)}"
+          required
+          #description="ngModel"
+          [(ngModel)]="product.description"
+          name="description"
+        ></ckeditor>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">
-          <label for="brand"> الفئة</label>
+          <label for="brand">Brand</label>
           <select id="brand" class="form-control" name="productBrandId" [(ngModel)]="product.productBrandId" required>
             <option *ngFor="let brand of brands"
                     [selected]="product.productBrandId === brand.id"
@@ -82,7 +82,7 @@
       </div>
       <div class="col-md-6">
         <div class="form-group">
-          <label for="type">النوع</label>
+          <label for="type">Type</label>
           <select id="type" class="form-control" name="productTypeId" [(ngModel)]="product.productTypeId" required>
             <option *ngFor="let type of types"
                     [selected]="product.productTypeId === type.id"
@@ -91,6 +91,35 @@
         </div>
       </div>
     </div>
+    <div class="form-group">
+      <label for="photos">صور المنتج</label>
+      <input
+      type="file"
+      class="form-control-file"
+      id="photos"
+      name="photos"
+      (change)="onPhotoChange($event)"
+      multiple
+      accept="image/*">
+    </div>
+
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="image-container" cdkDropList (cdkDropListDropped)="drop($event)">
+            <div class="image-wrapper" *ngFor="let photo of combinedPhotos" cdkDrag>
+              <img [src]="isPhotoObject(photo) ? photo.url : photo" class="img-fluid">
+              <div class="image-close">
+                <span class="fa fa-times" (click)="cancelUpload(photo)"></span> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
     <button [disabled]="!productForm.valid" type="submit" class="btn btn-primary my-3">حفظ</button>
   </form>
 </div>

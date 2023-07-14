@@ -30,9 +30,10 @@ namespace Infrastructure.Services
 
         public void DeleteFromDisk(Photo photo)
         {
-            if (File.Exists(Path.Combine("Content/images/products", photo.FileName)))
+            var filePath = Path.Combine("Content/images/products", photo.FileName);
+            if (File.Exists(filePath))
             {
-                File.Delete("Content/images/products/" + photo.FileName);
+                File.Delete(filePath);
             }
         }
     }

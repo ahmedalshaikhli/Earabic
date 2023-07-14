@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
-import {ProductFormValues} from '../shared/models/product';
+import {IProductToCreate, ProductFormValues} from '../shared/models/product';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { Observable, map, of } from 'rxjs';
 import { User } from '../shared/models/user';
@@ -15,14 +15,53 @@ export class AdminService {
   user: User[] = [];
   constructor(private http: HttpClient) { }
 
-  createProduct(product: ProductFormValues) {
-    return this.http.post(this.baseUrl + 'products', product);
+  createProduct(product: IProductToCreate, photos?: File[]): Observable<any> {
+    const formData = new FormData();
+    formData.append('name', product.name);
+    formData.append('description', product.description);
+    formData.append('price', product.price.toString());
+    formData.append('pictureUrl', product.pictureUrl);
+    formData.append('productBrandId', product.productBrandId.toString());
+    formData.append('productTypeId', product.productTypeId.toString());
+  
+    if (photos) {
+      for (let i = 0; i < photos.length; i++) {
+        formData.append('photos', photos[i]);
+      }
+    }
+  
+    return this.http.post(this.baseUrl + 'products', formData);
   }
 
-  updateProduct(product: ProductFormValues, id: number) {
+
+
+
+/*   updateProduct(product: ProductFormValues, id: number) {
     return this.http.put(this.baseUrl + 'products/' + id, product);
+  } */
+  updateProduct(id: number, product: ProductFormValues): Observable<any> {
+    const formData = new FormData();
+  
+    // Append each property of the product object to the FormData
+    formData.append('name', product.name);
+    formData.append('description', product.description);
+    formData.append('price', product.price.toString());
+    formData.append('productTypeId', product.productTypeId.toString());
+    formData.append('productBrandId', product.productBrandId.toString());
+  
+    // Append each photo file to the FormData
+    for (let i = 0; i < product.photos.length; i++) {
+      formData.append('photos', product.photos[i]);
+    }
+  
+    return this.http.put(`${this.baseUrl}products/${id}`, formData);
   }
-
+ 
+  deletePhoto(photoId: number): Observable<any> {
+    console.log(`Deleting photo with id: ${photoId}`); // Log the photo id
+    return this.http.delete(this.baseUrl + `products/photos/${photoId}`);
+}
+   
   deleteProduct(id: number) {
     return this.http.delete(this.baseUrl + 'products/' + id);
   }

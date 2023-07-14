@@ -6,6 +6,7 @@ import { IProduct } from 'src/app/shared/models/product';
 import { BreadcrumbService } from 'xng-breadcrumb';
 import { ShopService } from '../shop.service';
 import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions} from '@kolkov/ngx-gallery';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -14,6 +15,7 @@ import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOpt
   styleUrls: ['./product-details.component.scss']
 })
 export class ProductDetailsComponent implements OnInit {
+  baseUrl = "https://localhost:5001/";
   product?: IProduct;
   quantity = 1;
   quantityInBasket = 0;
@@ -58,19 +60,19 @@ export class ProductDetailsComponent implements OnInit {
     ];
     this.galleryImages = this.getImages();
   }
-
   getImages() {
     const imageUrls = [];
-    for (const photo of this.product.photos) {
-      imageUrls.push({
-        small: photo.pictureUrl,
-        medium: photo.pictureUrl,
-        big: photo.pictureUrl,
-      });
+    if (this.product && this.product.photos) {
+      for (const photo of this.product.photos) {
+        imageUrls.push({
+          small: this.baseUrl +`Content/images/products/${photo.fileName}`,
+          medium: this.baseUrl +`Content/images/products/${photo.fileName}`,
+          big: this.baseUrl +`Content/images/products/${photo.fileName}`,
+        });
+      }
     }
     return imageUrls;
   }
-
   loadProduct() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) this.shopService.getProduct(+id).subscribe({

@@ -13,6 +13,7 @@ export interface IPhoto {
   pictureUrl: string;
   fileName: string;
   isMain: boolean;
+  url?: string;
 }
 
 export interface IProductToCreate {
@@ -22,17 +23,20 @@ export interface IProductToCreate {
   pictureUrl: string;
   productTypeId: number;
   productBrandId: number;
+  photos: File[];
 }
-
 export class ProductFormValues implements IProductToCreate {
   name = '';
   description = '';
-  price : number;
+  price: number = 0;
   pictureUrl = '';
-  productBrandId !: number;
-  productTypeId !: number;
+  productBrandId!: number;
+  productTypeId!: number;
+  photos: File[] = [];
+  
 
   constructor(init?: ProductFormValues) {
     Object.assign(this, init);
   }
 }
+

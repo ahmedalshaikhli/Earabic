@@ -5,11 +5,10 @@ import { AdminComponent } from './admin.component';
 import {SharedModule} from '../shared/shared.module';
 import {AdminRoutingModule} from './admin-routing.module';
 import { EditProductFormComponent } from './products-list/edit-product-form/edit-product-form.component';
-import { EditProductPhotosComponent } from './products-list/edit-product-photos/edit-product-photos.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { UsersListComponent } from './users-list/users-list.component';
 
-import { EditProductComponent } from './products-list/edit-product/edit-product.component';
+
 import { UserEditComponent } from './users-list/user-edit/user-edit.component';
 import { UserDetailsComponent } from './users-list/user-details/user-details.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -21,18 +20,20 @@ import { AllOrderDetailsComponent } from './all-orders/all-order-details/all-ord
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CJProductsComponent } from './cj-products/cj-products.component';
 import { CjProductDetailsComponent } from './cj-products/cj-product-details/cj-product-details.component';
-
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CreateProductComponent } from './products-list/create-product/create-product.component';
 
 
 
 @NgModule({
-  declarations: [AdminComponent, EditProductComponent, EditProductFormComponent, EditProductPhotosComponent, ProductsListComponent, UsersListComponent, UserEditComponent, UserDetailsComponent, PaginationComponent, DashboardComponent, AllOrdersComponent, AllOrderDetailsComponent, CJProductsComponent, CjProductDetailsComponent],
+  declarations: [AdminComponent, EditProductFormComponent, ProductsListComponent, UsersListComponent, UserEditComponent, UserDetailsComponent, PaginationComponent, DashboardComponent, AllOrdersComponent, AllOrderDetailsComponent, CJProductsComponent, CjProductDetailsComponent, CreateProductComponent],
   imports: [
     CommonModule,
     SharedModule,
     AdminRoutingModule,
     NgxPaginationModule,
-    CKEditorModule
+    CKEditorModule,
+    DragDropModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
