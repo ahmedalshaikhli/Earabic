@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-3">
       <div class="input-group mb-3">
         <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="البحث">
-        <button class="btn btn-outline-secondary" type="button" (click)="searchUsers()">بحث</button>
-        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()">إعادة تعيين</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="searchUsers()"> <i class="fa fa-search"></i></button>
+        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()"><i class="fa fa-trash"></i></button>
       </div>
     </div>
     
@@ -19,6 +19,9 @@
               <th class="d-none d-md-table-cell">البريد الإلكتروني</th>
               <th>الشارع</th>
               <th class="d-none d-md-table-cell">المدينة</th>
+              <th ></th>
+              <th ></th>
+              <th ></th>
               
             </tr>
           </thead>
@@ -31,14 +34,26 @@
               <td class="d-none d-md-table-cell">{{ user.address?.city }}</td>
               <td>
                 
-                  <i [routerLink]="['details', user.id]" class="material-icons" style="cursor: pointer;">visibility</i>   
-         
-                  <i [routerLink]="['edit', user.id]" class="material-icons" style="cursor: pointer;">edit</i>
-      
-                  <i (click)="deleteUser(user.id)" class="material-icons" style="cursor: pointer;">delete</i> 
-        
-              
+                  <i [routerLink]="['details', user.id]" class="fa fa-eye" style="font-size: 1.4em; cursor: pointer; color: darkgray;">  </i>     
+
               </td>
+              <td>
+                
+               
+       
+                <i [routerLink]="['edit', user.id]"class="fa fa-pencil" style="font-size: 1.4em; cursor: pointer; color: darkgray;">  </i>
+    
+      
+            
+            </td>
+            <td>
+                
+               
+  
+              <i (click)="deleteUser(user.id)" class="fa fa-trash" style="font-size: 1.4em; cursor: pointer; color: darkgray;"></i>
+    
+          
+          </td>
             </tr>
           </tbody>
         </table>

@@ -19,7 +19,7 @@ export class CreateProductComponent implements OnInit {
   selectedPhotos: string[] = [];
   photos: { pictureUrl: string; name: string; }[];
   isEditMode: boolean;
-  
+  numberOfFiles = 0;
   public Editor = ClassicEditor as any;
 
   constructor(private route: ActivatedRoute, private adminService: AdminService, private router: Router,private shopService: ShopService,) {}
@@ -43,7 +43,7 @@ export class CreateProductComponent implements OnInit {
  
       const newProduct = { ...product, price: +product.price };
       this.adminService.createProduct(newProduct, this.product.photos).subscribe((response: any) => {
-        this.router.navigate(['/admin']);
+        this.router.navigate(['/admin/products-list']);
       });
     
   }
@@ -54,6 +54,7 @@ export class CreateProductComponent implements OnInit {
 
 
   onPhotoChange(event: any) {
+    this.numberOfFiles = event.target.files.length;
     const files: FileList = event.target.files;
     this.product.photos = Array.from(files);
   
@@ -72,9 +73,18 @@ export class CreateProductComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.selectedPhotos, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        this.selectedPhotos,
+        event.previousIndex,
+        event.currentIndex
+      );
+    } else {
+      const photo = this.selectedPhotos[event.previousIndex];
+      this.selectedPhotos.splice(event.previousIndex, 1);
+      this.selectedPhotos.splice(event.currentIndex, 0, photo);
+    }
   }
-
   
  
   cancelUpload(photo: string): void {
@@ -83,6 +93,9 @@ export class CreateProductComponent implements OnInit {
       this.selectedPhotos.splice(index, 1);
       // Optionally, you can also remove the file from the product.photos array
       // this.product.photos.splice(index, 1);
+  
+      // Decrease the number of files
+      this.numberOfFiles--;
     }
   }
   loadBrands() {

@@ -69,7 +69,7 @@
           ></ckeditor>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-2">
         <div class="col-md-6">
           <div class="form-group">
             <label for="brand"> الفئة</label>
@@ -97,23 +97,29 @@
           </div>
         </div>
       </div>
-      <div class="form-group">
-        <label for="photos">صور المنتج</label>
-        <input
-        type="file"
-        class="form-control-file"
-        id="photos"
-        name="photos"
-        (change)="onPhotoChange($event)"
-        multiple
-        accept="image/*">
+      <div class="form-group mt-2">
+      
+        <label for="photos" class="btn btn-primary btn-sm">
+          اضافة صور للمنتج
+          <input
+            type="file"
+            id="photos"
+            name="photos"
+            (change)="onPhotoChange($event)"
+            multiple
+            accept="image/*"
+            style="display: none;"
+          >
+        </label>
+        <p *ngIf="numberOfFiles > 0">Number of files selected: {{ numberOfFiles }}</p>
       </div>
-      <div class="container">
+     
+      <div class="container dragdrop">
         <div class="row">
           <div class="col">
-            <div class="image-container">
-              <div cdkDropList (cdkDropListDropped)="drop($event)" class="d-flex">
-                <div class="image-wrapper" *ngFor="let photo of selectedPhotos; let i = index" cdkDrag>
+            <div class="image-container" cdkDropList (cdkDropListDropped)="drop($event)" class="d-flex">
+              <div class="image-wrapper" *ngFor="let photo of selectedPhotos; let i = index" cdkDrag>
+                <div class="image-inner-wrapper">
                   <img [src]="photo" class="img-fluid">
                   <div class="image-close">
                     <span class="fa fa-times" (click)="cancelUpload(photo)"></span>
@@ -125,6 +131,6 @@
         </div>
       </div>
   
-      <button [disabled]="!productForm.valid" type="submit" class="btn btn-primary my-3">حفظ</button>
+      <button [disabled]="!productForm.valid" type="submit" class="btn btn-primary btn-sm my-3">حفظ</button>
     </form>
   </div>

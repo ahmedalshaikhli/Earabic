@@ -1,11 +1,13 @@
-<div class="container">
+<div class="container ">
   <div class="row">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-3">
       <div class="input-group mb-3">
         <input type="date" class="form-control" [(ngModel)]="searchTerm" placeholder="البحث حسب الاسم المعروض">
-        <button class="btn btn-outline-secondary" type="button" (click)="searchOrders()">بحث</button>
-        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()">مسح البحث</button>
+        <button class="btn btn-outline-secondary" type="button" (click)="searchOrders()"> <i class="fa fa-search"></i></button>
+        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()"><i class="fa fa-trash"></i></button>
       </div>
+
+    
     </div>
     <div class="col-12">
       <div class="table-responsive">
@@ -15,12 +17,13 @@
               <th class="d-none d-sm-table-cell">الرقم التعريفي</th>
               <th>بريد المشتري</th>
               <th>تاريخ الطلب</th>
-              <th>طريقة التوصيل</th>
+              <th class="d-none d-sm-table-cell">طريقة التوصيل</th>
               <th class="d-none d-sm-table-cell">الإجمالي الفرعي</th>
               <th class="d-none d-sm-table-cell">سعر الشحن</th>
               <th class="d-none d-sm-table-cell">الإجمالي</th>
               <th class="d-none d-sm-table-cell">طريقة الدفع</th>
               <th class="d-none d-sm-table-cell">الحالة</th>
+              <th> </th>
               </tr>
             
           </thead>
@@ -29,14 +32,14 @@
               <td class="d-none d-sm-table-cell">{{ order.id }}</td>
               <td>{{ order.buyerEmail }}</td>
               <td>{{ order.orderDate | date: 'short' }}</td>
-              <td >{{ order.deliveryMethod }}</td>
+              <td class="d-none d-sm-table-cell">{{ order.deliveryMethod }}</td>
               <td class="d-none d-sm-table-cell">{{ order.subtotal | currency:'USD':'symbol-narrow' }}</td>
               <td class="d-none d-sm-table-cell">{{ order.shippingPrice | currency:'USD':'symbol-narrow' }}</td>
               <td class="d-none d-sm-table-cell">{{ order.total | currency:'USD':'symbol-narrow' }}</td>
               <td class="d-none d-sm-table-cell">{{ order.paymentMethod }}</td>
               <td class="d-none d-sm-table-cell">{{ order.status }}</td>
               <td>
-                <i [routerLink]="['details', order.buyerEmail]" class="material-icons" style="cursor: pointer;">visibility</i>   
+                <i [routerLink]="['details', order.buyerEmail]" class="fa fa-eye" style="font-size: 1.4em; cursor: pointer; color: darkgray;"></i>   
                
               </td>
             </tr>

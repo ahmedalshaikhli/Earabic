@@ -14,7 +14,7 @@ export class AllOrderDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private adminService: AdminService,
-   
+    private router: Router
    
   ) {}
 
@@ -35,7 +35,9 @@ export class AllOrderDetailsComponent implements OnInit {
     );
   }
 
-  
+  goBack() {
+    this.router.navigate(['/admin/all-orders']); // Replace '/' with the appropriate route for your previous page
+  }
 
  
 }

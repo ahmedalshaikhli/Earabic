@@ -1,71 +1,87 @@
-
-
-<!-- admin.component.html -->
-<div class="wrapper">
-  <!-- Sidebar -->
-
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 col-sm-2 d-none d-sm-block">
-        <nav id="sidebar" class="">
-          <div class="sidebar-header">
-            <h3>لوحة التحكم</h3>
-          </div>
-      
-          <ul class="list-unstyled components">
-            <li class="mt-3">
-              <a routerLink="dashboard" routerLinkActive="active"><i class="material-icons">dashboard</i><span>لوحة الإحصاءات</span></a>
-          </li>
-          <li>
-              <a routerLink="all-orders" routerLinkActive="active"><i class="material-icons">list_alt</i><span>الطلبات</span></a>
-          </li>
-          <li>
-              <a routerLink="products-list" routerLinkActive="active"><i class="material-icons">store</i><span>المنتجات</span></a>
-          </li>
-          <li>
-              <a routerLink="users-list" routerLinkActive="active"><i class="material-icons">group_add</i><span>المستخدمون</span></a>
-            </li>
-            <li>
-              <a routerLink="products-CJ" routerLinkActive="active"><i class="material-icons">group_add</i><span> products-CJ</span></a>
-            </li>
-        <!--     <li>
-              <a routerLink="user-settings" routerLinkActive="active"><i class="material-icons">settings</i><span>Settings</span></a>
-            </li> -->
-
+<div class="container-fluid ">
+  <div class="row">
+    <div class="col-lg-2 col-md-3 col-sm-4 d-none d-sm-block">
+   
+      <nav> 
+     
+        <ul class="list-unstyled  full-height">
+          <li class=  "li-with-border">
+            
+            <a>
+            
+              <h3 class="mt-3 ms-2 font-weight-bold"> القائمة</h3>
+              
+            </a>
            
-          </ul>
-        </nav>
-      
-      </div>
-      <div class="col-12 col-sm-10 ">
-          <!-- Page Content -->
-  <div id="content">
-    <div class="row justify-content-center pt-3 pb-3">
-      <div class="col-12">
-        <div class="d-sm-none d-flex justify-content-center">
-          <button type="button" class="btn btn-outline-primary" routerLink="dashboard" routerLinkActive="active">
-            <i class="material-icons">dashboard</i> لوحة الإحصاءات
-          </button>
-          <button type="button" class="btn btn-outline-primary" routerLink="all-orders" routerLinkActive="active">
-            <i class="material-icons">list_alt</i> الطلبات
-          </button>
-          <button type="button" class="btn btn-outline-primary" routerLink="products-list" routerLinkActive="active">
-            <i class="material-icons">store</i> المنتجات
-          </button>
-          <button type="button" class="btn btn-outline-primary" routerLink="users-list" routerLinkActive="active">
-            <i class="material-icons">group_add</i> المستخدمون
-          </button>
-        </div>
-      </div>
-    </div>
-  
+          </li>
     
-     <router-outlet></router-outlet> 
+          <li class="">
+            <a routerLink="dashboard" routerLinkActive="active">
+              <i class="fa fa-tachometer gray-icon" aria-hidden="true"></i>
+              <span class="menu-text"> الإحصاءات</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="all-orders" routerLinkActive="active">
+              <i class="fa fa-list-alt gray-icon" aria-hidden="true"></i>
+              <span class="menu-text">الطلبات</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="products-list" routerLinkActive="active">
+              <i class="fa fa-building gray-icon" aria-hidden="true"></i>
+              <span class="menu-text">المنتجات</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="users-list" routerLinkActive="active">
+              <i class="fa fa-address-book-o gray-icon" aria-hidden="true"></i>
+              <span class="menu-text">المستخدمون</span>
+            </a>
+          </li>
+          <li>
+            <a routerLink="products-CJ" routerLinkActive="active">
+              <i class="fa fa-external-link-square gray-icon" aria-hidden="true"></i>
+              <span class="menu-text">products-CJ</span>
+            </a>
+          </li> 
+        </ul>
+      </nav>
+    </div>
+    <div class="col-lg-10 col-md-9 col-sm-8">
+      <div class="row pt-3 pb-3 ">
+        <div class=" text-center">
+         
+            <h1 class="text-shadow" >لوحة الإدارة</h1>
+           
+        <div class="menu-container d-sm-none   ">
+            <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="dashboard" routerLinkActive="active">
+              <i class="fa fa-tachometer gray-icon" aria-hidden="true"></i> الإحصاءات
+            </button>
+            <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="all-orders" routerLinkActive="active">
+              <i class="fa fa-list-alt gray-icon" aria-hidden="true"></i> الطلبات
+            </button>
+            <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="products-list" routerLinkActive="active">
+              <i class="fa fa-building gray-icon" aria-hidden="true"></i> المنتجات     
+            </button>
+            <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="users-list" routerLinkActive="active">
+              <i class="fa fa-address-book-o gray-icon" aria-hidden="true"></i> المستخدمون
+            </button>
+            <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="products-CJ" routerLinkActive="active">
+              <i class="fa fa-external-link-square gray-icon " aria-hidden="true"></i>
+              <span class="menu-text"> products-CJ</span>
+            </button>
+            
+          </div>
+          
+        </div> 
+        <div class="menu-container ">
+ <router-outlet></router-outlet>
+        </div>
+       
       </div>
+      
+      
     </div>
   </div>
-
-
-  </div>
-
- 
+</div>

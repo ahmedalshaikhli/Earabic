@@ -70,7 +70,41 @@ public async Task<ActionResult<ProductToReturnDto>> CreateProduct([FromForm] Pro
     var productToReturn = _mapper.Map<Product, ProductToReturnDto>(product);
 
     return Ok(productToReturn);
+}[HttpGet("external-products")]
+public async Task<ActionResult<PaginatedResult<ProductExternal>>> GetProductsFromExternal(int pageSize = 20, int pageNum = 1)
+{
+    var productExternals = await _cjDropshippingService.GetProductsFromExternal(pageSize, pageNum);
+
+    if (productExternals == null)
+    {
+        return NotFound();
+    }
+
+    var data = _mapper.Map<List<ProductExternal>, List<ProductExternal>>(productExternals.Data);
+    var result = new PaginatedResult<ProductExternal> 
+    {
+        Data = data,
+        PageSize = productExternals.PageSize,
+        PageNum = productExternals.PageNum,
+        TotalCount = productExternals.TotalCount
+    };
+
+    return Ok(result);
 }
+
+
+     [HttpGet("product-external-details/{pid}")]
+        public async Task<IActionResult> GetProductextExternalDetails(string pid)
+        {
+            var productDetails = await _cjDropshippingService.GetProductDetailsForExternal(pid);
+
+            if (productDetails == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(productDetails);
+        }
        /*  [Cached(600)] */
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
