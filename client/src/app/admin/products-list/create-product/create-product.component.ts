@@ -27,8 +27,10 @@ export class CreateProductComponent implements OnInit {
   ngOnInit(): void {
     this.product = {
       name: '',
-      description: '',
+      nameEn : '',
+      oldPrice : 0,
       price: 0,
+      description: '',
       pictureUrl: '',
       productTypeId: 0,
       productBrandId: 0,
@@ -48,9 +50,10 @@ export class CreateProductComponent implements OnInit {
     
   }
  
-  updatePrice(event: any) {
+/*   updatePrice(event: any) {
     this.product.price = event;
-  }
+    this.product.oldPrice = event;
+  } */
 
 
   onPhotoChange(event: any) {

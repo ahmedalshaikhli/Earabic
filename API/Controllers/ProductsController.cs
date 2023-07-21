@@ -8,7 +8,8 @@ using Core.Specifications;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json.Linq;
+using Google.Cloud.Translation.V2;
 namespace API.Controllers
 {
     public class ProductsController : BaseApiController
@@ -32,6 +33,8 @@ public async Task<ActionResult<ProductToReturnDto>> CreateProduct([FromForm] Pro
 {
     // Map the productDto to product, without Photos
     var product = _mapper.Map<ProductDto, Product>(productDto);
+
+     product.IsExternal = false;
 
     // Handle photos manually
     if (productDto.Photos != null)
@@ -70,7 +73,10 @@ public async Task<ActionResult<ProductToReturnDto>> CreateProduct([FromForm] Pro
     var productToReturn = _mapper.Map<Product, ProductToReturnDto>(product);
 
     return Ok(productToReturn);
-}[HttpGet("external-products")]
+}
+
+
+[HttpGet("external-products")]
 public async Task<ActionResult<PaginatedResult<ProductExternal>>> GetProductsFromExternal(int pageSize = 20, int pageNum = 1)
 {
     var productExternals = await _cjDropshippingService.GetProductsFromExternal(pageSize, pageNum);
@@ -167,8 +173,10 @@ public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, [FromF
 
     // Assign the properties from the productDto to the existing product entity
     product.Name = productDto.Name;
-    product.Description  = productDto.Description ;
+    product.NameEn = productDto.NameEn;
+    product.OldPrice   = productDto.OldPrice ;
     product.Price  = productDto.Price ;
+    product.Description  = productDto.Description ;
     product.ProductTypeId  = productDto.ProductTypeId ;
     product.ProductBrandId  = productDto.ProductBrandId ;
 
@@ -220,6 +228,118 @@ public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, [FromF
 
     return Ok(productToReturn);
 }
+[HttpPost("product-external/{pid}")]
+public async Task<IActionResult> SaveProductFromExternal(string pid)
+{
+    // Fetch the product data from the external source
+    var productExternalData = await _cjDropshippingService.GetProductDetailsForExternal(pid);
+
+    if (productExternalData == null)
+    {
+        return BadRequest(new ApiResponse(400, "Data field is missing in the response"));
+    }
+
+    var productData = productExternalData["data"];
+
+    if (productData == null)
+    {
+        return BadRequest(new ApiResponse(400, "Product data is null"));
+    }
+
+    // Check if ProductNameEn is null, if it's null then assign it to "Default Name".
+    string productNameEn = productData["productNameEn"]?.ToString();
+    if (string.IsNullOrEmpty(productNameEn))
+    {
+        return BadRequest(new ApiResponse(400, "Product name is required"));
+    }
+
+    string sellPrice = productData["sellPrice"].ToString();
+    if (string.IsNullOrEmpty(sellPrice))
+    {
+        return BadRequest(new ApiResponse(400, "Product sellPrice is required"));
+    }
+
+    var productImage = productData["productImage"]?.ToString();
+    if (string.IsNullOrEmpty(productImage))
+    {
+        return BadRequest(new ApiResponse(400, "Product image data is required"));
+    }
+
+    // Parse the productImage JSON array string into a list of strings
+    var imageUrls = Newtonsoft.Json.JsonConvert.DeserializeObject<List<string>>(productImage);
+
+    // Ensure there's at least one URL in the list
+    if (imageUrls == null || imageUrls.Count == 0)
+    {
+        return BadRequest(new ApiResponse(400, "Product image URLs are missing"));
+    }
+
+    // Map the list of image URLs to a list of PhotoDto objects with IsMain set
+    // Prepare the list to hold PhotoDto objects
+    var photos = new List<PhotoDto>();
+
+    // Loop through the image URLs to create PhotoDto objects
+    for (int i = 0; i < imageUrls.Count; i++)
+    {
+        var photo = new PhotoDto
+        {
+            Id = i + 1, // Assuming the IDs start from 1
+            PictureUrl = imageUrls[i],
+            FileName = "photo" + (i + 1), // Assigning a default filename based on index
+            IsMain = i == 0 // Set IsMain to true for the first URL, false for others
+        };
+
+        photos.Add(photo);
+    }
+    string description = productData["description"]?.ToString();
+    if (string.IsNullOrEmpty(description))
+    {
+        return BadRequest(new ApiResponse(400, "Product description is required"));
+    }
+
+    var product = new Product
+    {
+        Name = "",
+        NameEn  = productNameEn,
+        Description = description,
+        Price = 0,
+        OldPrice  = decimal.TryParse(sellPrice, out decimal price) ? price : default(decimal),
+        ProductBrandId = 1, // Set the default value for ProductBrandId
+        ProductTypeId = 1,
+        IsExternal = true, 
+        Photos = new List<Photo>(), // initialize an empty list
+        PictureUrl = imageUrls[0] // Set the first URL as the PictureUrl
+    };
+   foreach (var photo in photos)
+    {
+        // You can save the PhotoDto directly, but I'll convert it to the Photo entity type first
+        var photoEntity = new Photo
+        {
+            PictureUrl = photo.PictureUrl,
+            FileName = photo.FileName,
+            IsMain = photo.IsMain
+        };
+
+        product.Photos.Add(photoEntity);
+    }
+    // Adjust the structure of photos data
+
+    // Save the product to the database
+    _unitOfWork.Repository<Product>().Add(product);
+    var result = await _unitOfWork.Complete();
+
+    if (result <= 0)
+    {
+        return BadRequest(new ApiResponse(400, "Problem creating product"));
+    }
+
+    return Ok(product);
+}
+
+
+
+
+
 
 
 
@@ -244,6 +364,20 @@ public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, [FromF
 
             return Ok();
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         [HttpDelete("photos/{photoId}")]
         public async Task<ActionResult> DeletePhoto(int photoId)
 {
@@ -266,6 +400,8 @@ public async Task<ActionResult<ProductToReturnDto>> UpdateProduct(int id, [FromF
 
     return Ok();
 } 
+
+
  
     }
 

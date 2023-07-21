@@ -20,10 +20,19 @@ CreateMap<ProductDto, Product>()
 CreateMap<Product, ProductToReturnDto>()
  .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
     .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
-    .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos.Select(p => new PhotoDto { Id = p.Id, FileName = p.FileName })))
+    .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos.Select(p => new PhotoDto { Id = p.Id, FileName = p.FileName, PictureUrl = p.PictureUrl})))
+    
     .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
             CreateMap<Photo, PhotoDto>();
-
+CreateMap<ProductExternalDto, Product>()
+           
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.ProductNameEn))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.sellPrice ?? default(decimal)))
+            .ForMember(dest => dest.PictureUrl, opt => opt.MapFrom(src => src.productImage));
+        // Map other fields as needed
+    CreateMap<ProductExternal, Product>();
+   
+  
             CreateMap<Core.Entities.Identity.Address, AddressDto>().ReverseMap();
             CreateMap<CustomerBasketDto, CustomerBasket>();
             CreateMap<BasketItemDto, BasketItem>();

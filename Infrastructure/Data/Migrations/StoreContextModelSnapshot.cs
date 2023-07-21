@@ -147,10 +147,19 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsExternal")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("NameEn")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("OldPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("PictureUrl")
                         .HasColumnType("text");

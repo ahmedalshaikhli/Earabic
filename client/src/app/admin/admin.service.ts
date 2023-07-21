@@ -18,8 +18,10 @@ export class AdminService {
   createProduct(product: IProductToCreate, photos?: File[]): Observable<any> {
     const formData = new FormData();
     formData.append('name', product.name);
+    formData.append('nameEn', product.nameEn);
     formData.append('description', product.description);
     formData.append('price', product.price.toString());
+    formData.append('oldPrice', product.oldPrice.toString());
     formData.append('pictureUrl', product.pictureUrl);
     formData.append('productBrandId', product.productBrandId.toString());
     formData.append('productTypeId', product.productTypeId.toString());
@@ -44,11 +46,13 @@ export class AdminService {
   
     // Append each property of the product object to the FormData
     formData.append('name', product.name);
+    formData.append('nameEn', product.nameEn);
     formData.append('description', product.description);
     formData.append('price', product.price.toString());
+    formData.append('oldPrice', product.oldPrice.toString());
     formData.append('productTypeId', product.productTypeId.toString());
     formData.append('productBrandId', product.productBrandId.toString());
-  
+    formData.append('pictureUrl', product.pictureUrl);
     // Append each photo file to the FormData
     for (let i = 0; i < product.photos.length; i++) {
       formData.append('photos', product.photos[i]);
@@ -138,5 +142,9 @@ export class AdminService {
     const url = `${this.baseUrl}products/product-external-details/${pid}`;
     return this.http.get<any>(url);
   }
+
+saveProductFromExternal(pid: string) {
+  return this.http.post(this.baseUrl + 'products/product-external/' + pid, {});
+}
 
 }

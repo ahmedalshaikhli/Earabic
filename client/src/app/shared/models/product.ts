@@ -1,6 +1,8 @@
 export interface IProduct {
   id: number;
+  nameEn: string;
   name: string;
+  oldPrice: number;
   description: string;
   price: number;
   pictureUrl: string;
@@ -18,6 +20,8 @@ export interface IPhoto {
 
 export interface IProductToCreate {
   name: string;
+  nameEn: string;
+  oldPrice: number;
   description: string;
   price: number;
   pictureUrl: string;
@@ -27,6 +31,8 @@ export interface IProductToCreate {
 }
 export class ProductFormValues implements IProductToCreate {
   name = '';
+  nameEn : '';
+  oldPrice : 0;
   description = '';
   price: number = 0;
   pictureUrl = '';

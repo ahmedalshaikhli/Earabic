@@ -485,3 +485,5 @@ bin
 appsettings.json
 appsettings.Development.json
 *.db
+
+.vscode/

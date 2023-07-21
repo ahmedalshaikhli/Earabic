@@ -4,11 +4,19 @@ using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Services
 {
     public class PhotoService : IPhotoService
     {
+        private readonly IConfiguration _config;
+
+        public PhotoService(IConfiguration config)
+        {
+            _config = config;
+        }
+
         public async Task<Photo> SaveToDiskAsync(IFormFile file)
         {
             var photo = new Photo();
@@ -20,7 +28,7 @@ namespace Infrastructure.Services
                 await file.CopyToAsync(fileStream);
 
                 photo.FileName = fileName;
-                photo.PictureUrl = "images/products/" + fileName;
+                photo.PictureUrl = _config["ApiUrl"] + "images/products/" +  fileName;
 
                 return photo;
             }

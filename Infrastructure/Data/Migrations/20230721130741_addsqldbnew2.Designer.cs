@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Data.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20230712091524_addsqldbnew2")]
+    [Migration("20230721130741_addsqldbnew2")]
     partial class addsqldbnew2
     {
         /// <inheritdoc />
@@ -150,10 +150,19 @@ namespace Infrastructure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsExternal")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<string>("NameEn")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("OldPrice")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("PictureUrl")
                         .HasColumnType("text");

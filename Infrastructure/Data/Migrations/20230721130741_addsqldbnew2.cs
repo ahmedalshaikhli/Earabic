@@ -91,11 +91,14 @@ namespace Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: false),
+                    NameEn = table.Column<string>(type: "text", nullable: true),
+                    OldPrice = table.Column<decimal>(type: "numeric", nullable: false),
                     Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: false),
                     ProductTypeId = table.Column<int>(type: "integer", nullable: false),
                     ProductBrandId = table.Column<int>(type: "integer", nullable: false),
-                    PictureUrl = table.Column<string>(type: "text", nullable: true)
+                    PictureUrl = table.Column<string>(type: "text", nullable: true),
+                    IsExternal = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {

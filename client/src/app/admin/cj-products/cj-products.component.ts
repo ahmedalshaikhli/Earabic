@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductExternal } from 'src/app/shared/models/ProductExternal';
 import { AdminService } from '../admin.service';
 import { PaginatedResult } from 'src/app/shared/models/PaginatedResult';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-cj-products',
   templateUrl: './cj-products.component.html',
@@ -14,7 +14,7 @@ export class CJProductsComponent implements OnInit {
   products: ProductExternal[] = [];
   totalPages = 0;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -55,6 +55,15 @@ export class CJProductsComponent implements OnInit {
         console.log(productDetails);
       }, error => {
         console.log(error);
+      });
+  }
+
+  saveProductFromExternal(pid: string) {
+    this.adminService.saveProductFromExternal(pid)
+      .subscribe(() => {
+        this.toastr.success('تم اضافة المنتج بنجاح');
+      }, error => {
+        this.toastr.error('Error occurred when saving product: ' + error);
       });
   }
 }

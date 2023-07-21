@@ -8,7 +8,7 @@ import { ShopService } from '../shop.service';
 import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryImageSize, NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import { environment } from 'src/environments/environment';
 
-
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -21,8 +21,8 @@ export class ProductDetailsComponent implements OnInit {
   quantityInBasket = 0;
   galleryOptions: NgxGalleryOptions[];
   galleryImages: NgxGalleryImage[];
-
-  constructor(private shopService: ShopService, private activatedRoute: ActivatedRoute, 
+  productDescription?: SafeHtml;
+  constructor(private shopService: ShopService, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer,
     private bcService: BreadcrumbService, private basketService: BasketService) {
       this.bcService.set('@productDetails', ' ')
     }
@@ -65,9 +65,9 @@ export class ProductDetailsComponent implements OnInit {
     if (this.product && this.product.photos) {
       for (const photo of this.product.photos) {
         imageUrls.push({
-          small: this.baseUrl +`Content/images/products/${photo.fileName}`,
-          medium: this.baseUrl +`Content/images/products/${photo.fileName}`,
-          big: this.baseUrl +`Content/images/products/${photo.fileName}`,
+          small: `${photo.pictureUrl}`,
+          medium: `${photo.pictureUrl}`,
+          big: `${photo.pictureUrl}`,
         });
       }
     }
@@ -77,6 +77,7 @@ export class ProductDetailsComponent implements OnInit {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) this.shopService.getProduct(+id).subscribe({
       next: product => {
+        this.productDescription = this.sanitizer.bypassSecurityTrustHtml(product.description);
         this.product = product;
         this.bcService.set('@productDetails', product.name);
         this.initializeGallery();
@@ -93,6 +94,7 @@ export class ProductDetailsComponent implements OnInit {
       error: error => console.log(error)
     })
   }
+
 
   incrementQuantity() {
     this.quantity++;

@@ -39,6 +39,8 @@ brands: Brand[];
   ngOnInit(): void {
     this.product = {
       name: '',
+      nameEn : '',
+      oldPrice : 0,
       description: '',
       price: 0,
       pictureUrl: '',
@@ -82,7 +84,7 @@ brands: Brand[];
   }
   getPhotoUrl(photo: any): {url: string, id: number} {
     return {
-      url: 'https://localhost:5001/Content/images/products/' + photo.fileName,
+      url:  photo.pictureUrl,
       id: photo.id,
       
     };
@@ -99,6 +101,9 @@ brands: Brand[];
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.combinedPhotos.push({file: newPhotos[i], url: e.target.result as string});
+        if (i === 0) {
+          this.product.pictureUrl = e.target.result as string; // set pictureUrl to the first image
+        }
       };
       reader.readAsDataURL(newPhotos[i]);
     }
@@ -117,21 +122,7 @@ brands: Brand[];
     });
   }
 
-/*  setMainPhoto(): void {
-    const mainPhoto = this.combinedPhotos[0];
-    if (!this.isPhotoObject(mainPhoto)) {
-      this.product.pictureUrl = mainPhoto;
-  
-      // Set isMain property for each photo
-      this.combinedPhotos.forEach((photo, index) => {
-        if (index === 0) {
-          photo.isMain = true;
-        } else {
-          photo.isMain = false;
-        }
-      });
-    }
-  }  */
+
 cancelUpload(photo: any): void {
   console.log('cancelUpload function called with photo:', photo);
 
