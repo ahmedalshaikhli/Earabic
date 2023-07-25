@@ -4,6 +4,9 @@ import { IProduct } from '../shared/models/product';
 import { ShopParams } from '../shared/models/shopParams';
 import { Type } from '../shared/models/type';
 import { ShopService } from './shop.service';
+import { Observable } from 'rxjs';
+import { Basket, BasketItem } from '../shared/models/basket';
+import { BasketService } from '../basket/basket.service';
 
 @Component({
   selector: 'app-shop',
@@ -12,6 +15,7 @@ import { ShopService } from './shop.service';
 })
 export class ShopComponent implements OnInit {
   @ViewChild('search') searchTerm?: ElementRef;
+  basket$: Observable<Basket>;
   products: IProduct[] = [];
   brands: Brand[] = [];
   types: Type[] = [];
@@ -23,11 +27,13 @@ export class ShopComponent implements OnInit {
   ];
   totalCount = 0;
 
-  constructor(private shopService: ShopService) {
+  constructor(private shopService: ShopService, public basketService: BasketService,) {
     this.shopParams = shopService.getShopParams();
+   
   }
 
   ngOnInit(): void {
+    this.basket$ = this.basketService.basketSource$;
     this.getProducts();
     this.getBrands();
     this.getTypes();
@@ -43,7 +49,9 @@ export class ShopComponent implements OnInit {
       error: error => console.log(error)
     })
   }
-
+  getCount(items: BasketItem[]) {
+    return items.reduce((sum, item) => sum + item.quantity, 0);
+  }
   getBrands() {
     this.shopService.getBrands().subscribe({
       next: response => this.brands = [{id: 0, name: 'جميع المنتوجات'}, ...response],

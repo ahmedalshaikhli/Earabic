@@ -1,7 +1,16 @@
 <div class="container">
   <div class="row mt-2">
+    <div class="col-12 col-md-3">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="البحث   ">
+        <button class="btn btn-outline-secondary" type="button" (click)="searchProducts()"> <i class="fa fa-search"></i></button>
+        <button class="btn btn-outline-secondary" type="button" (click)="resetSearch()"><i class="fa fa-trash"></i></button>
+      </div>
+    </div>
     <div class="col-12">
-      <h2>CJ Products</h2>
+
+      
+    <!--   <h2>CJ Products</h2> -->
       <div class="table-responsive">
         <table class="table table-striped">
           <thead class="thead-dark">

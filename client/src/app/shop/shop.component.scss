@@ -68,3 +68,62 @@
   font-size: 0.8rem; /* Change as per your requirement */
 }
 
+.featured {
+  height: 250px;
+}
+
+img {
+  object-fit: cover;
+  height: 600px;
+  width: 100%;
+}
+
+.img-responsive {
+  height: 500px;
+  object-fit: cover;
+}
+
+
+
+@media (max-width: 767.98px) { 
+  .stuck-bottom {
+    position: fixed;
+    bottom: 200px;
+    left: 16px;
+    right: -60px;
+    z-index: 1030;
+    
+}
+  
+  .cart-icon {
+      background-color: #522888; /* Purple but semi-transparent */
+      border: 2px solid rgb(202, 200, 204); /* Dark purple border */
+      border-radius: 50%; /* This will make the icon background circular */
+      width: 50px;  /* Adjust the width and height to suit your needs */
+      height: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-shadow: 0px 5px 15px rgba(0,0,0,0.2); /* Add this line */
+  }
+  .cart-icon i {
+      color: white; /* You may adjust the icon color */
+  }
+  .cart-count {
+      position: absolute;
+      top: -3px;
+      right: -2px;
+      background-color: #BF9553;
+      color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* color: rgb(75, 0, 130); */
+      transition: transform 0.3s ease;
+  }
+
+}

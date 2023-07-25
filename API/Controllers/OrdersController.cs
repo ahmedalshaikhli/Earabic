@@ -37,8 +37,8 @@ public async Task<ActionResult<Order>> CreateOrder(OrderDto orderDto)
     }
 
     // Email content can be improved and you can use HTML tags to style it
-    var emailConfirmationMessage = $"Dear customer, \n\nYour order was successfully created. \n\nOrder ID: {order.Id}"; 
-    await _emailSender.SendEmailAsync(email, "Order Confirmation", emailConfirmationMessage);
+   /*  var emailConfirmationMessage = $"Dear customer, \n\nYour order was successfully created. \n\nOrder ID: {order.Id}"; 
+    await _emailSender.SendEmailAsync(email, "Order Confirmation", emailConfirmationMessage); */
 
     return Ok(order);
 }

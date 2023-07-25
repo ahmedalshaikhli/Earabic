@@ -8,7 +8,7 @@ namespace Core.Interfaces
     public interface ICJDropshippingService
     {
         Task<dynamic> GetCategories();
-       Task<PaginatedResult<ProductExternal>> GetProductsFromExternal(int pageSize, int pageNum);
+       Task<PaginatedResult<ProductExternal>> GetProductsFromExternal(string pid, string productNameEn, int pageSize, int pageNum);
        Task<dynamic> GetProductDetailsForExternal(string pid);
     }
 }

@@ -119,7 +119,9 @@ export class CheckoutPaymentComponent implements OnInit {
   private async createOrder(basket: Basket | null) {
     if (!basket) throw new Error('Basket is null');
     const orderToCreate = this.getOrderToCreate(basket);
-    return firstValueFrom(this.checkoutService.createOrder(orderToCreate));
+    const createdOrder = await firstValueFrom(this.checkoutService.createOrder(orderToCreate));
+    console.log(createdOrder);
+    return createdOrder;
   }
 
   private getOrderToCreate(basket: Basket): OrderToCreate {

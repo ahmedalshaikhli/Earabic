@@ -35,8 +35,8 @@ export class ProductDetailsComponent implements OnInit {
   initializeGallery() {
     this.galleryOptions = [
       {
-        width: '600px',
-        height: '600px',
+        width: '500px',
+        height: '500px',
         thumbnailsColumns: 4,
         imageAnimation: NgxGalleryAnimation.Slide
       },

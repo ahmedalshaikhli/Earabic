@@ -65,3 +65,10 @@
     background-color: #BF9553;
     color: white;
   }
+
+  iframe.ck.ck-editor__editable {
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+  }

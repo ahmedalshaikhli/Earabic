@@ -77,9 +77,9 @@ public async Task<ActionResult<ProductToReturnDto>> CreateProduct([FromForm] Pro
 
 
 [HttpGet("external-products")]
-public async Task<ActionResult<PaginatedResult<ProductExternal>>> GetProductsFromExternal(int pageSize = 20, int pageNum = 1)
+public async Task<ActionResult<PaginatedResult<ProductExternal>>> GetProductsFromExternal(string pid= "", string productNameEn = "", int pageSize = 20, int pageNum = 1)
 {
-    var productExternals = await _cjDropshippingService.GetProductsFromExternal(pageSize, pageNum);
+    var productExternals = await _cjDropshippingService.GetProductsFromExternal(pid,productNameEn, pageSize, pageNum);
 
     if (productExternals == null)
     {

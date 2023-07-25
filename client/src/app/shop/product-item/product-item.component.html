@@ -1,19 +1,19 @@
 <article *ngIf="product" class="block product no-border z-depth-2-top z-depth-2--hover">
   <div class="block-image">
-    <div class="d-flex justify-content-center mt-3 ">
+    <div class="d-flex justify-content-center  ">
       <a [routerLink]="'/shop/' + product.id" aria-label="'View ' + product.name">
         <img src="{{product.pictureUrl}}" alt="{{product.name}}" class="img-center img-fluid custom-image-height">
       </a>
     </div>
-    <span class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-blue text-uppercase">New</span>
+<!--     <span class="product-ribbon product-ribbon-right product-ribbon--style-1 bg-blue text-uppercase">New</span> -->
   </div>
   <div class="block-body text-center">
-    <h3 class="heading heading-5 strong-600 text-capitalize ">
+    <div class="responsive-product-title">
       <a class="custom-font-size" [routerLink]="'/shop/' + product.id" aria-label="'View ' + product.name">
-        {{product.name | slice:0:25}}
+        {{product.name | slice:0:15}}
       </a>
-    </h3>
-    <p class="product-description">
+    </div>
+    <p class="product-description mb-2">
      السعر: {{product.price | currency}}
     </p>
     <div class="product-buttons ">

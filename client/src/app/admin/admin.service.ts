@@ -130,12 +130,25 @@ export class AdminService {
   getUserOrderByEmail(buyerEmail:string) {
     return this.http.get<any>(this.baseUrl + 'orders/email/' + buyerEmail);
   }
-  getExternalProducts(pageSize: number = 10, pageNum: number = 0): Observable<any> {
+  getExternalProducts(pageSize: number = 10, pageNum: number = 0, searchValue: string = ''): Observable<any> {
     const url = `${this.baseUrl}products/external-products`;
-    const params = new HttpParams()
+    let params = new HttpParams()
       .set('pageSize', pageSize.toString())
       .set('pageNum', pageNum.toString());
   
+    const pidRegex = /^\d+$/; // Define the regex pattern for pid (e.g., all digits)
+    
+    if (searchValue.trim() !== '') {
+      if (pidRegex.test(searchValue)) {
+        params = params.set('pid', searchValue);
+      } else {
+        params = params.set('productNameEn', searchValue);
+      }
+    }
+    
+    console.log('Request URL:', url);
+    console.log('Request Params:', params.toString());
+    
     return this.http.get<any>(url, { params });
   }
   getPexternalroductDetails(pid: string): Observable<any> {

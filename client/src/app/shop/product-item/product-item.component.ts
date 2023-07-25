@@ -15,6 +15,7 @@ export class ProductItemComponent {
 
   addItemToBasket() {
     this.product && this.basketService.addItemToBasket(this.product);
+    window.navigator.vibrate(200);
   }
 
   openShareDialog(product: IProduct): void {
