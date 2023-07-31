@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using Core.Entities.Identity;
-using Infrastructure.Data.Identity;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Core.Interfaces;
+using Infrastructue.Data;
 
 namespace API.Extensions
 {
@@ -17,21 +18,21 @@ namespace API.Extensions
         public static IServiceCollection AddIdentityServices(this IServiceCollection services,
             IConfiguration config)
         {
-            services.AddDbContext<AppIdentityDbContext>(opt =>
+            services.AddDbContext<StoreContext>(opt =>
             {
-                opt.UseNpgsql(config.GetConnectionString("IdentityConnection"));
+                opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
             });
 
             var builder = services.AddIdentityCore<AppUser>(opt =>
             {
-             opt.Password.RequireDigit = false;
-opt.Password.RequireNonAlphanumeric = false;
-opt.Password.RequireUppercase = false;
-opt.Password.RequireLowercase = false;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireLowercase = false;
             });
 
             builder = new IdentityBuilder(builder.UserType, typeof(AppRole), builder.Services);
-            builder.AddEntityFrameworkStores<AppIdentityDbContext>();
+            builder.AddEntityFrameworkStores<StoreContext>();
             builder.AddDefaultTokenProviders();
             builder.AddSignInManager<SignInManager<AppUser>>();
             builder.AddRoleValidator<RoleValidator<AppRole>>();

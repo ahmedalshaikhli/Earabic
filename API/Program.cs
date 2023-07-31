@@ -1,9 +1,7 @@
 using API.Extensions;
 using API.Middleware;
 using Core.Entities.Identity;
-using Infrastructue.Data;
 using Infrastructure.Data;
-using Infrastructure.Data.Identity;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -16,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.FileProviders;
 using System;
 using System.IO;
+using Infrastructue.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,14 +64,12 @@ app.UseEndpoints(endpoints =>
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 var context = services.GetRequiredService<StoreContext>();
-var identityContext = services.GetRequiredService<AppIdentityDbContext>();
 var userManager = services.GetRequiredService<UserManager<AppUser>>();
 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
 var logger = services.GetRequiredService<ILogger<Program>>();
 try
 {
     await context.Database.MigrateAsync();
-    await identityContext.Database.MigrateAsync();
     await StoreContextSeed.SeedAsync(context);
     await AppIdentityDbContextSeed.SeedUsersAsync(userManager, roleManager);
 }

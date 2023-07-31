@@ -1,11 +1,13 @@
 using System.Reflection;
 using Core.Entities;
+using Core.Entities.Identity;
 using Core.Entities.OrderAggregate;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructue.Data
 {
-    public class StoreContext : DbContext
+    public class StoreContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
@@ -17,10 +19,11 @@ namespace Infrastructue.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+        public DbSet<Core.Entities.Identity.Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder); // This is needed for Identity
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
@@ -35,13 +38,12 @@ namespace Infrastructue.Data
                     }
                 }
             }
-                 if (Database.ProviderName == "Microsoft.EntityFrameworkCore.SqlServer")
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.SqlServer")
             {
                modelBuilder.Entity<Order>()
                .Property(p => p.Subtotal)
                .HasColumnType("decimal(18,2)");
             }
-
         }
     }
 }
