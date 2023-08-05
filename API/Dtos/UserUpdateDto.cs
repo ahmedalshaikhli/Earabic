@@ -1,9 +1,14 @@
-using API.Dtos;
 
-public class UserUpdateDto
+
+
+namespace API.Dtos
 {
-    public string Email { get; set; }
-    public string DisplayName { get; set; }
-    public AddressDto Address { get; set; }
-     public IFormFile UserProfilePhoto { get; set; }
+    public class UpdateUserDto
+    {
+        public string Id { get; set; }
+        public string Email { get; set; }
+        public string DisplayName { get; set; }
+        public List<string> Roles { get; set; }
+       /*  public IFormFile UserProfilePhoto { get; set; } */
+    }
 }

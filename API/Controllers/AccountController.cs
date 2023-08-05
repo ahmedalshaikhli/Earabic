@@ -247,49 +247,69 @@ public async Task<ActionResult<IEnumerable<AppUser>>> GetAllUsers(int pageIndex 
 // get user 
  //localhost:5001/api/account/edit/8ac15527-4350-4690-8e99-2e254d086970
 
+
+
+
 [HttpGet("edit/{id}")]
-    public async Task<AppUser> FindByIdAsyncf(string id)
+public async Task<ActionResult<UserDto>> FindByIdAsyncf(string id)
 {
-    return await _userManager.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id);
+    var user = await _userManager.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id);
+    
+    if (user == null)
+    {
+        return NotFound();
+    }
+
+    var roles = await _userManager.GetRolesAsync(user);
+
+    return new UserDto
+    {
+        id = user.Id,
+        Email = user.Email,
+        DisplayName = user.DisplayName,
+      /*   Token = await _tokenService.CreateToken(user), */
+        Address = _mapper.Map<Address, AddressDto>(user.Address),
+        UserProfilePhoto = user.UserProfilePhoto,
+        Roles = roles.ToList() // make sure you add this Roles property in your UserDto
+    };
 }
 
-
 //Edit user in admin panel
-
- [HttpPut("edit/{id}")]
-public async Task<IActionResult> UpdateUser(string id, [FromBody] AppUser appUser)
+[HttpPut("edit/{id}")]
+public async Task<IActionResult> UpdateUserRoles(string id, UpdateUserDto updateUserDto)
 {
-    // Retrieve the existing user data
-    AppUser existingUser = await FindByIdAsyncf(id);
+    // Find the user by id
+    var user = await _userManager.Users.Include(u => u.Address).SingleOrDefaultAsync(u => u.Id == id);
 
-    // Check if the user exists
-    if (existingUser == null)
+    if (user == null)
     {
-        return NotFound("User not found");
+        return NotFound();
     }
 
-    // Update the existing user data with the new data
-    existingUser.DisplayName = appUser.DisplayName;
-    existingUser.Email = appUser.Email;
-    existingUser.Address.FirstName = appUser.Address.FirstName;
-    existingUser.Address.LastName = appUser.Address.LastName;
-    existingUser.Address.Street = appUser.Address.Street;
-    existingUser.Address.City = appUser.Address.City;
-    existingUser.Address.State = appUser.Address.State;
-    existingUser.Address.Zipcode = appUser.Address.Zipcode;
-    // Add any other fields you'd like to update
+    // Update user properties
+    user.Email = updateUserDto.Email;
+    user.DisplayName = updateUserDto.DisplayName;
+   
 
-    // Save the changes using the UserManager
-    IdentityResult result = await _userManager.UpdateAsync(existingUser);
+    // Update user roles
+    var existingRoles = await _userManager.GetRolesAsync(user);
+    var rolesToAdd = updateUserDto.Roles.Except(existingRoles);
+    var rolesToRemove = existingRoles.Except(updateUserDto.Roles);
 
-    // Check if the update was successful
+    await _userManager.AddToRolesAsync(user, rolesToAdd);
+    await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+
+    // Save changes to the database
+    var result = await _userManager.UpdateAsync(user);
+
     if (result.Succeeded)
     {
-        return Ok(existingUser);
+        return Ok();
     }
-
-    // If the update was not successful, return an error response
-    return BadRequest(result.Errors);
+    else
+    {
+        return BadRequest(result.Errors);
+    }
 }
 
 //Delete user in Admin Panel
@@ -347,12 +367,12 @@ public IActionResult Upload([FromForm] IFormFile file)
 } */
 
 
-
+/* 
 
 
 [Authorize]
 [HttpPut("update-user")]
-public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUpdateDto userUpdate)
+public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UpdateUserDto userUpdate)
 {
     var user = await _userManager.FindUserByClaimsPrincipleWithAddress(HttpContext.User);
     if (user == null) return NotFound("User not found");
@@ -409,7 +429,7 @@ public async Task<ActionResult<UserDto>> UpdateUserInformation([FromForm] UserUp
     if (result.Succeeded) return Ok(_mapper.Map<AppUser, UserDto>(user));
 
     return BadRequest("Problem updating the user");
-}
+} */
 //Allow user to dlete his account 
 [Authorize]
 [HttpDelete("delete-account")]

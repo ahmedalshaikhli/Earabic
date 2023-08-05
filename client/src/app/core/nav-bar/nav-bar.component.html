@@ -5,53 +5,18 @@
       <img src="../../../assets/img/iraq-logo.PNG" alt="Brand Logo" class="img-fluid logo">
     </a>
  
-<!--     <ul class="navbar-nav ms-5 mt-3 d-block d-md-none stuck-bottom">
-      <li class="nav-item ms-4">
-          <a routerLink="/basket" class="cart-icon position-relative">
-              <i class="fa fa-shopping-cart fa-2x " style="font-size: 20px; "></i>
-              <div *ngIf="(basketService.basketSource$ | async) as basket" class="cart-no-small-1">
-                  {{ getCount(basket.items) }}
-              </div>
-          </a>
-      </li>
-      
-  </ul> -->
-<!--     <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            الفئات
-          </a>
-          <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarDarkDropdownMenuLink">
-            <ng-container *ngFor="let category of categories">
-              <li class="dropdown-submenu">
-                <a class="dropdown-item dropdown-toggle" href="#" (mouseenter)="openSubMenu($event, category)">
-                  {{ category.categoryFirstName }}
-                </a>
-                <ul class="dropdown-menu" *ngIf="category.showSubMenu">
-                  <ng-container *ngFor="let subCategory of category.categoryFirstList">
-                    <li>
-                      <a class="dropdown-item" href="#">{{ subCategory.categorySecondName }}</a>
-                    </li>
-                  </ng-container>
-                </ul>
-              </li>
-            </ng-container>
-          </ul>
-        </li>
-      </ul>
-    </div> -->
-  
- <!--    <ul class="navbar-nav  mt-2 d-block d-md-none  ">
-        <li class="nav-item  me-3">
-            <a class="nav-link" routerLink="/account/login"><i class="fa fa-user fa-1x text-light" style="font-size: 20px;"></i></a>
-        </li>
-    </ul> -->
+
       <button class="navbar-toggler collapsed" type="button" onclick="toggleOffcanvas()" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNav" aria-controls="offcanvasNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
       </button>
+
+      
       <div class="navbar-collapse collapse" id="navbarColor01" >
-        <ul class="navbar-nav me-start">
+
+
+
+        <ng-container *ngIf="accountService.currentUser$ | async as user">
+          <ul class="navbar-nav me-start">
             <li class="nav-item">
                 <a routerLink="/basket" class="position-relative">
                     <i class="fa fa-shopping-cart fa-2x me-5 text-light"></i>
@@ -63,12 +28,20 @@
         </ul>
  
           <ul class="navbar-nav me-auto">
-        
-              <li class="nav-item">
+            <li class="nav-item">
+              <a class="nav-link" *ngIf="(isSupplier$ | async)" routerLink="/supplier" routerLinkActive="active">المورد</a>
+          </li>
+             <li class="nav-item">
                   <a class="nav-link" *ngIf="(isAdmin$ | async)"  routerLink="/admin" routerLinkActive="active">لوحة الإدارة</a>
-              </li>
-      
+              </li> 
+         
+     
           </ul>
+
+
+
+        </ng-container>
+
 
           <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
               <ul class="navbar-nav">
@@ -200,6 +173,9 @@
                   <i class="fa  fa-tachometer fa-1x me-3"  style="font-size: 22px; vertical-align: middle;"></i>لوحة الإدارة</a>
   
             </li>
+            <li class="nav-item">
+              <a class="nav-link" *ngIf="(isSupplier$ | async)"   routerLink="/supplier" routerLinkActive="active"> المورد</a>
+          </li>
     </ng-container>
 
       </ul>

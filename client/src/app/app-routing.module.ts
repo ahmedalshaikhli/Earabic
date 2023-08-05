@@ -44,12 +44,19 @@ const routes: Routes = [
   {path: 'user-settings/EditUserComponent', component: EditUserComponent, data: {breadcrumb: 'Edit-user'}}, */
   {
     path: 'admin',
-    canActivate: [AuthGuard, AdminGuard],
+ /*    canActivate: [AuthGuard, AdminGuard], */
     loadChildren: () => import('./admin/admin.module')
       .then(mod => mod.AdminModule), data: { breadcrumb: 'Admin' }
-  },
-  { path: '**', redirectTo: 'not-found', pathMatch: 'full' }
-];
+    },
+    {
+      path: 'supplier',
+   /*    canActivate: [AuthGuard, AdminGuard], */
+      loadChildren: () => import('./supplier-interface/supplier.module')
+        .then(mod => mod.SupplierModule ), data: { breadcrumb: 'SupplierModule' }
+    },
+    { path: '**', redirectTo: 'not-found', pathMatch: 'full' }
+  ];
+ 
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

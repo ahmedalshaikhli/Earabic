@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, of, ReplaySubject, take, throwError } from 'rxjs';
+import { catchError, map, Observable, of, ReplaySubject, switchMap, take, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Address, User } from '../shared/models/user';
+import { UserDto } from '../shared/models/UserDto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,49 +16,90 @@ export class AccountService {
   private isAdminSource = new ReplaySubject<boolean>(1);
   isAdmin$ = this.isAdminSource.asObservable();
 
+  private isSupplierSource = new ReplaySubject<boolean>(1);
+  isSupplier$ = this.isSupplierSource.asObservable();
+
   constructor(private http: HttpClient, private router: Router) { }
 
 
-  isAdmin(token: string): boolean {
+/*   isAdmin(token: string): boolean {
     if (token) {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
       if (decodedToken.role.indexOf('Admin') > -1) {
         return true;
       }
     }
+  } */
+  isAdmin(token: string): boolean {
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      return decodedToken.role.indexOf('Admin') > -1; // Return true if the role is found, false otherwise
+    }
+    return false;
   }
+  
+  isSupplier(token: string): boolean {
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      return decodedToken.role.indexOf('Supplier') > -1; // Return true if the role is found, false otherwise
+    }
+    return false;
+  }
+  
+/*   isSupplier(token: string): boolean {
+    if (token) {
+      const decodedToken = JSON.parse(atob(token.split('.')[1]));
+      const isSupplier = decodedToken.role.indexOf('Supplier') > -1;
+      console.log('isSupplier:', isSupplier);
+      return isSupplier;
+    }
+    return false;
+  }  */
 
-
-  loadCurrentUser(token: string | null) {
+  async loadCurrentUser(token: string | null) {
     if (token == null) {
       this.currentUserSource.next(null);
+      this.isAdminSource.next(false); // Set isAdmin to false
+      this.isSupplierSource.next(false); // Set isSupplier to false
       return of(null);
     }
 
     let headers = new HttpHeaders();
     headers = headers.set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<User>(this.baseUrl + 'account', {headers}).pipe(
-      map((user: User) => {
-        if (user) {
-          localStorage.setItem('token', user.token);
-          this.currentUserSource.next(user);
-          this.isAdminSource.next(this.isAdmin(user.token));
-        }
-      })
-    );
+    const user = await this.http.get<User>(this.baseUrl + 'account', { headers }).toPromise();
+    if (user) {
+      localStorage.setItem('token', user.token);
+      this.currentUserSource.next(user);
+      const isSupplier = await this.isSupplier(user.token);
+      this.isSupplierSource.next(isSupplier);
+      const isAdmin = await this.isAdmin(user.token);
+      this.isAdminSource.next(isAdmin);
+
+    
+    }
   }
 
   login(values: any) {
     return this.http.post<User>(this.baseUrl + 'account/login', values).pipe(
-      map((user: User) => {
+      switchMap((user: User) => {
         if (user) {
           localStorage.setItem('token', user.token);
           this.currentUserSource.next(user);
           this.isAdminSource.next(this.isAdmin(user.token));
+          this.isSupplierSource.next(this.isSupplier(user.token)); // Update isSupplier immediately
+  
+          this.getCurrentUser().subscribe(userDto => {
+            localStorage.setItem('userId', userDto.id);
+          });
         }
+        return of(user); // Return the user object in the observable
       })
     );
+  }
+
+  getCurrentUser(): Observable<UserDto> {
+    return this.http.get<UserDto>(this.baseUrl + 'account');
   }
 
   register(values: any) {
@@ -135,8 +177,8 @@ export class AccountService {
   getEmailFromToken(token: string): string | null {
     if (token) {
       const decodedToken = JSON.parse(atob(token.split('.')[1]));
-      console.log('Token:', token);
-      console.log('Decoded token:', decodedToken);
+      /* console.log('Token:', token); */
+     /*  console.log('Decoded token:', decodedToken); */
   
       return decodedToken.email;
     }

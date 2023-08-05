@@ -27,6 +27,7 @@ export class UserDetailsComponent implements OnInit {
   getUserDetails(): void {
     this.adminService.getUserById(this.userId).subscribe((user) => {
       this.user = user;
+      console.log(user.roles); // this will log the roles of the user
     });
   }
 

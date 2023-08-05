@@ -40,7 +40,8 @@ namespace Infrastructure.Identity
                 var roles = new List<AppRole>
                 {
                     new AppRole {Name = "Admin"},
-                    new AppRole {Name = "Member"}
+                    new AppRole {Name = "Member"},
+                    new AppRole {Name = "Supplier"} // Add the Supplier role
                 };
 
                 foreach (var role in roles)
@@ -53,6 +54,17 @@ namespace Infrastructure.Identity
                     await userManager.CreateAsync(user, "Pa$$w0rd");
                     await userManager.AddToRoleAsync(user, "Member");
                     if (user.Email == "admin@test.com") await userManager.AddToRoleAsync(user, "Admin");
+                }
+
+                // Assign Supplier role to specific users (if needed)
+                var supplierUsers = new List<string> { "bob@test.com" }; // Add email addresses of users to be Supplier
+                foreach (var email in supplierUsers)
+                {
+                    var user = await userManager.FindByEmailAsync(email);
+                    if (user != null)
+                    {
+                        await userManager.AddToRoleAsync(user, "Supplier");
+                    }
                 }
             }
         }

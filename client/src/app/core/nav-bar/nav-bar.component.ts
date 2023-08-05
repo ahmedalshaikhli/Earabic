@@ -15,17 +15,18 @@ import { CategoryService } from '../services/category.service';
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-
-
 export class NavBarComponent implements OnInit {
   brands: Brand[] = [];
   shopParams: ShopParams;
   basket$: Observable<Basket>;
   currentUser$: Observable<User>;
   isAdmin$: Observable<boolean>;
+  isSupplier$: Observable<boolean>;
   isOffcanvasOpen: boolean = false;
   categories: Category[];
+  loading$: Observable<boolean>; 
   public userProfilePhoto: string = '';
+
   constructor(
     public basketService: BasketService,
     public accountService: AccountService,
@@ -38,41 +39,27 @@ export class NavBarComponent implements OnInit {
   ngOnInit() {
     this.getBrands();
     /* this.getCategories(); */
+  
     this.basket$ = this.basketService.basketSource$;
     this.currentUser$ = this.accountService.currentUser$;
     this.isAdmin$ = this.accountService.isAdmin$;
+    this.isSupplier$ = this.accountService.isSupplier$;
+
+    this.isAdmin$.subscribe(isAdmin => console.log('isAdmin:', isAdmin));
+    this.isSupplier$.subscribe(isSupplier => console.log('isSupplier:', isSupplier));
+
     this.getUserProfilePhoto();
   }
-
-/*   getCategories() {
-    this.categoryService.getCategories().subscribe({
-      next: (response) => {
-        console.log(response); // Log the response to the console
-        if (Array.isArray(response.data)) {
-          this.categories = response.data.map((category: Category) => ({
-            ...category,
-            showSubMenu: false
-          }));
-        } else {
-          console.error('Invalid response format. Expected an array.');
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
-  } */
-
-  // Rest of your component code...
 
   openSubMenu(event: MouseEvent, category: Category) {
     category.showSubMenu = true;
   }
+
   getBrands() {
     this.shopService.getBrands().subscribe({
       next: response => this.brands = [{id: 0, name: 'الجميع'}, ...response],
       error: error => console.log(error)
-    })
+    });
   }
 
   getCount(items: BasketItem[]) {
@@ -86,18 +73,16 @@ export class NavBarComponent implements OnInit {
   toggleOffcanvas() {
     this.isOffcanvasOpen = !this.isOffcanvasOpen;
   }
+
   async getUserProfilePhoto() {
     try {
       const userSettingObservable = await this.accountService.getCurrentUserForSetting();
       userSettingObservable.subscribe(userSetting => {
         this.userProfilePhoto = userSetting.userProfilePhoto;
-        console.log(this.userProfilePhoto);
+       /*  console.log(this.userProfilePhoto); */
       });
     } catch (error) {
       console.error(error);
     }
   }
-
-  
 }
-

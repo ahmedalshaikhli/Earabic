@@ -8,6 +8,8 @@ export interface IProduct {
   pictureUrl: string;
   productType: string;
   productBrand: string;
+
+  creatorName: string;
   photos: IPhoto[];
 }
 export interface IPhoto {

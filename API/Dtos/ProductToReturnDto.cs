@@ -15,5 +15,6 @@ namespace API.Dtos
     public List<PhotoDto> Photos { get; set; }
     public string PictureUrl { get; set; } 
     public bool IsExternal { get; set; } 
+     public string CreatorName { get; set; }
     }
 }

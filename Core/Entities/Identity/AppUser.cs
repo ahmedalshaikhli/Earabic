@@ -8,5 +8,6 @@ namespace Core.Entities.Identity
         
         public Address Address { get; set; }
         public string UserProfilePhoto { get; set; }
+        
     }
 }

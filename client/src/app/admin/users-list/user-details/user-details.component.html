@@ -1,44 +1,4 @@
-<!-- <div class="card-body">
-  <div class="mb-3">
-    <label class="form-label">الاسم :</label>
-    <span>{{ user.displayName }}</span>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">البريد الإلكتروني:</label>
-    <span>{{ user.email }}</span>
-  </div>
-
-  <div class="mb-3">
-    <label class="form-label">اسم الشارع:</label>
-    <span>{{ user.address.firstName }}</span>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">اسم العائلة:</label>
-    <span>{{ user.address.lastName }}</span>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">الشارع:</label>
-    <span>{{ user.address.street }}</span>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">المدينة:</label>
-    <span>{{ user.address.city }}</span>
-  </div>
-  <div class="mb-3">
-    <label class="form-label">المنطقة/الولاية:</label>
-    <span>{{ user.address.state }}</span>
-  </div>
-  <div class="mb-3">
-    <label class="form-label"> رقم الهاتف</label>
-    <span>{{ user.address.zipcode }}</span>
-  </div>
-  <button class="btn btn-primary" (click)="goBack()">العودة</button>
-</div>
- -->
-
-
 <div class="container" style="margin-top: 10px;">
-  
   <div class="card mb-4">
       <div class="card-header text-center">
           <img class="rounded-circle user-avatar" 
@@ -75,6 +35,13 @@
                       </li>
                   </ul>
               </ng-container>
+              <!-- Add this section to display user roles -->
+              <div class="mt-3" *ngIf="user.roles && user.roles.length > 0">
+                  <strong>الأدوار:</strong>
+                  <ul>
+                      <li *ngFor="let role of user.roles">{{ role }}</li>
+                  </ul>
+              </div>
           </ng-container>
       </div>
       <button class="btn btn-primary" (click)="goBack()">العودة</button>

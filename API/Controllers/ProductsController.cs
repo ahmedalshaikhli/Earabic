@@ -10,31 +10,38 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Google.Cloud.Translation.V2;
+using Microsoft.AspNetCore.Identity;
+using Core.Entities.Identity;
+using API.Extensions;
+
 namespace API.Controllers
 {
     public class ProductsController : BaseApiController
     {
+        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPhotoService _photoService;
    
         private readonly ICJDropshippingService _cjDropshippingService;
-        public ProductsController(IUnitOfWork unitOfWork, IMapper mapper , IPhotoService photoService , ICJDropshippingService cjDropshippingService)
+        public ProductsController(UserManager<AppUser> userManager,IUnitOfWork unitOfWork, IMapper mapper , IPhotoService photoService , ICJDropshippingService cjDropshippingService)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _photoService = photoService;
              _cjDropshippingService = cjDropshippingService; 
+            _userManager = userManager;
         }
 
 
 [HttpPost]
+/*  [Authorize]  */ // Ensure only authenticated users can create products
 public async Task<ActionResult<ProductToReturnDto>> CreateProduct([FromForm] ProductDto productDto)
 {
     // Map the productDto to product, without Photos
     var product = _mapper.Map<ProductDto, Product>(productDto);
 
-     product.IsExternal = false;
+    product.IsExternal = false;
 
     // Handle photos manually
     if (productDto.Photos != null)
@@ -59,6 +66,16 @@ public async Task<ActionResult<ProductToReturnDto>> CreateProduct([FromForm] Pro
             product.PictureUrl = mainPhoto.PictureUrl;
         }
     }
+
+    // Get the current user
+    var creator = await _userManager.FindUserByClaimsPrincipleWithAddress(HttpContext.User);
+if (creator == null)
+{
+    return NotFound("User not found");
+}
+
+// Set the creator
+product.CreatorId = creator.Id;
 
     // Save the product to the database or perform other necessary operations
     _unitOfWork.Repository<Product>().Add(product);
@@ -129,6 +146,35 @@ public async Task<ActionResult<PaginatedResult<ProductExternal>>> GetProductsFro
 
             return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
         }
+   [HttpGet("supplier/{userId}")]
+public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetSupplierProducts(string userId)
+{
+    var user = await _userManager.FindByIdAsync(userId);
+    if (user == null)
+    {
+        return NotFound(new { message = "User not found" });
+    }
+
+    var productParams = new ProductSpecParams
+    {
+        CreatorId = user.Id,
+        // Add other necessary parameters here...
+    };
+
+    var spec = new ProductsWithTypesAndBrandsSpecification(productParams);
+    var countSpec = new ProductsWithFiltersForCountSpecification(productParams);
+
+    var totalItems = await _unitOfWork.Repository<Product>().CountAsync(countSpec);
+    var products = await _unitOfWork.Repository<Product>().ListAsync(spec);
+    
+    var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+
+    return Ok(new Pagination<ProductToReturnDto>(productParams.PageIndex, productParams.PageSize, totalItems, data));
+}
+
+
+
+
 
         [Cached(600)]
         [HttpGet("{id}")]

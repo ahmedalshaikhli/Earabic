@@ -21,7 +21,7 @@ CreateMap<Product, ProductToReturnDto>()
  .ForMember(d => d.ProductType, o => o.MapFrom(s => s.ProductType.Name))
     .ForMember(d => d.ProductBrand, o => o.MapFrom(s => s.ProductBrand.Name))
     .ForMember(d => d.Photos, o => o.MapFrom(s => s.Photos.Select(p => new PhotoDto { Id = p.Id, FileName = p.FileName, PictureUrl = p.PictureUrl})))
-    
+     .ForMember(d => d.CreatorName, o => o.MapFrom(s => s.Creator.DisplayName)) // This line is added
     .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
             CreateMap<Photo, PhotoDto>();
 CreateMap<ProductExternalDto, Product>()

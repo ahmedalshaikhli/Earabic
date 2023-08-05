@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
     if (basketId) this.basketService.getBasket(basketId);
   }
 
-  loadCurrentUser() {
+  async loadCurrentUser() {
     const token = localStorage.getItem('token');
-    this.accountService.loadCurrentUser(token).subscribe();
+    await this.accountService.loadCurrentUser(token);
   }
 }

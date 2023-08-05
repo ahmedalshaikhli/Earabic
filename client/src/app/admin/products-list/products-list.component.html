@@ -21,6 +21,7 @@
               <th>المنتج</th>
               <th>الاسم</th>
               <th>السعر</th>
+              <th>المنشئ</th> <!-- New TH for Creator Name -->
               <th></th>
               <th></th>
             </tr>
@@ -33,6 +34,7 @@
               </td>
               <td>{{ product.name }}</td>
               <td>{{ product.price | currency }}</td>
+              <td>{{ product.creatorName }}</td> <!-- New TD for Creator Name -->
               <td>
           
                 <i [routerLink]="['edit', product.id]"  class="fa fa-pencil" style="font-size: 1.4em; cursor: pointer; color: darkgray;"></i>

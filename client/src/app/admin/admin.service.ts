@@ -160,4 +160,8 @@ saveProductFromExternal(pid: string) {
   return this.http.post(this.baseUrl + 'products/product-external/' + pid, {});
 }
 
+
+getSupplierProducts(userId: string): Observable<any> {
+  return this.http.get<any>(`${this.baseUrl}products/supplier/${userId}`);
+}
 }

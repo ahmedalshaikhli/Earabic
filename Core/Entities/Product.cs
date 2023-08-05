@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-
+using Core.Entities.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Entities
 {
     public class Product : BaseEntity
@@ -17,6 +18,9 @@ namespace Core.Entities
         public ICollection<Photo> Photos { get; set; } = new List<Photo>();
         public string PictureUrl { get; set; } 
        public bool IsExternal { get; set; } 
+       [ForeignKey("CreatorId")]
+       public AppUser Creator { get; set; }
+        public string CreatorId { get; set; } // this will hold the user Id
 
     }
 }
