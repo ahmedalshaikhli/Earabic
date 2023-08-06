@@ -58,7 +58,7 @@
             <div *ngIf="user && user.rolesCheckbox">
               <div *ngFor="let role of roles; index as i">
                 <input type="checkbox" id="{{role}}" [(ngModel)]="user.rolesCheckbox[i]" name="{{role}}">
-                <label for="{{role}}">{{role}}</label>
+                <label for="{{role}}"> {{role}} </label>
               </div>
             </div>
         </div>

@@ -14,6 +14,8 @@ import { SupplierDashboardComponent } from './supplier-dashboard/supplier-dashbo
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { SupplierAllOrdersComponent } from './supplier-all-orders/supplier-all-orders.component';
+import { SupplierOrderDetailsComponent } from './supplier-all-orders/supplier-order-details/supplier-order-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SupplierProductDetailsComponent,
     SupplierProductCreateComponent,
     SupplierDashboardComponent,
-
+    SupplierAllOrdersComponent,
+    SupplierOrderDetailsComponent,
     
   ],
   imports: [CommonModule,

@@ -26,7 +26,7 @@ namespace Infrastructure.Services
     {
         var productItem = await _unitOfWork.Repository<Product>().GetByIdAsync(item.Id);
         var itemOrdered = new ProductItemOrdered(productItem.Id, productItem.Name, productItem.Photos.FirstOrDefault(x => x.IsMain)?.PictureUrl);
-        var orderItem = new OrderItem(itemOrdered, productItem.Price, item.Quantity);
+         var orderItem = new OrderItem(itemOrdered, productItem.Price, item.Quantity, productItem.CreatorId);
         items.Add(orderItem);
     }
 
@@ -100,6 +100,11 @@ namespace Infrastructure.Services
             var spec = new OrdersWithItemsAndOrderingSpecification( buyerEmail);
 
             return await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
+        }
+         public async Task<IReadOnlyList<Order>> GetOrdersForSupplierAsync(string userId)
+        {
+            var spec = new SupplierOrdersWithItemsAndOrderingSpecification(userId);
+            return await _unitOfWork.Repository<Order>().ListAsync(spec);
         }
         
     }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {IProductToCreate, ProductFormValues} from '../shared/models/product';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import { Observable, map, of } from 'rxjs';
+import { Observable, catchError, map, of, tap, throwError } from 'rxjs';
 import { User } from '../shared/models/user';
 import { ProductExternal } from '../shared/models/ProductExternal';
 
@@ -164,4 +164,26 @@ saveProductFromExternal(pid: string) {
 getSupplierProducts(userId: string): Observable<any> {
   return this.http.get<any>(`${this.baseUrl}products/supplier/${userId}`);
 }
+getAllOrdersForSupplier(userId: string, pageIndex: number = 0, pageSize: number = 10, searchTerm: string = '') {
+  const url = this.baseUrl + `orders/allordersForSupplier?userId=${userId}&pageIndex=${pageIndex}&pageSize=${pageSize}&searchTerm=${searchTerm}`;
+  console.log('getAllOrdersForSupplier called with userId:', userId, 'pageIndex:', pageIndex, 'pageSize:', pageSize, 'searchTerm:', searchTerm);
+  return this.http.get<any>(url).pipe(
+    map(response => {
+      console.log('Mapped response:', response);
+      // Perform additional parsing or validation if needed
+      return response;
+    }),
+    tap((response: any) => console.log('Response from server:', response)),
+    catchError(error => {
+      // Handle the error here
+      console.error(error);
+      // The throwError operator re-throws the error so it can be caught elsewhere (like in your component)
+      return throwError(error);
+    })
+  );
+}
+
+
+
+
 }

@@ -23,13 +23,13 @@
               </a>
             </li>
             <li>
-              <a routerLink="supplier-all-orders" routerLinkActive="active">
+              <a routerLink="supplier-all-orders">
                 <i class="fa fa-list-alt gray-icon" aria-hidden="true"></i>
                 <span class="menu-text">الطلبات</span>
               </a>
             </li>
             <li>
-              <a routerLink="supplier-product-list" routerLinkActive="active">
+              <a routerLink="supplier-product-list" >
                 <i class="fa fa-building gray-icon" aria-hidden="true"></i>
                 <span class="menu-text">المنتجات</span>
               </a>
@@ -43,18 +43,24 @@
            
               <h1 class="text-shadow" >لوحة المورد</h1>
              
-          <div class="menu-container d-sm-none   ">
-              <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="supplier-dashboard" routerLinkActive="active">
-                <i class="fa fa-tachometer gray-icon" aria-hidden="true"></i> الإحصاءات
-              </button>
-              <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="supplier-all-orders" routerLinkActive="active">
-                <i class="fa fa-list-alt gray-icon" aria-hidden="true"></i> الطلبات
-              </button>
-              <button type="button" class="btn btn-outline-primary small-button custom-button" routerLink="products-list" routerLinkActive="active">
-                <i class="fa fa-building gray-icon" aria-hidden="true"></i> المنتجات     
-              </button>
-              
-            </div>
+              <div class="menu-container d-sm-none">
+                <ul class="list-unstyled">
+                  <li class="custom-list-item">
+                    <a routerLink="supplier-dashboard" routerLinkActive="active">
+                      <i class="fa fa-tachometer gray-icon" aria-hidden="true"></i> الإحصاءات
+                    </a>
+                  </li>
+                  <li class="custom-list-item">
+                    <a routerLink="supplier-all-orders">
+                      <i class="fa fa-list-alt gray-icon" aria-hidden="true"></i> الطلبات
+                    </a>
+                  </li>
+                  <li class="custom-list-item">
+                    <a routerLink="supplier-product-list">
+                      <i class="fa fa-building gray-icon" aria-hidden="true"></i> المنتجات
+                    </a>
+                  </li>
+                </ul>
             
           </div> 
           <div class="menu-container ">

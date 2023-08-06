@@ -303,6 +303,7 @@ namespace Infrastructure.Data.Migrations
                     ItemOrderedProductItemId = table.Column<int>(name: "ItemOrdered_ProductItemId", type: "integer", nullable: true),
                     ItemOrderedProductName = table.Column<string>(name: "ItemOrdered_ProductName", type: "text", nullable: true),
                     ItemOrderedPictureUrl = table.Column<string>(name: "ItemOrdered_PictureUrl", type: "text", nullable: true),
+                    SupplierId = table.Column<string>(type: "text", nullable: true),
                     Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
                     OrderId = table.Column<int>(type: "integer", nullable: true)
