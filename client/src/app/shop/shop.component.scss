@@ -126,4 +126,43 @@ img {
       transition: transform 0.3s ease;
   }
 
+
+
+
+}
+
+
+
+.select-wrapper  {
+  appearance: none;
+  border: none;
+  background: transparent;
+  background-repeat: no-repeat;
+  outline: none;
+  color: #fff;
+
+}
+
+.option-wrape{
+  color:#BF9553;
+}
+
+.form-select:focus {
+  border-color: none !important;
+  box-shadow: none !important;
+}
+
+
+
+
+
+.col-2 {
+  width: 15.666667%;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.col-10 {
+  width: 84.333333%;
+  padding-left: 0;
 }

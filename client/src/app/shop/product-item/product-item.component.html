@@ -10,22 +10,24 @@
   <div class="block-body text-center">
     <div class="responsive-product-title">
       <a class="custom-font-size" [routerLink]="'/shop/' + product.id" aria-label="'View ' + product.name">
-        {{product.name | slice:0:15}}
+        {{product.name }}
       </a>
     </div>
-    <p class="product-description mb-2">
+    <p class=" mt-1 text-start">
      السعر: {{product.price | currency}}
     </p>
-    <div class="product-buttons ">
-      <div class="row align-items-center">
-        <div class="col-6 text-start">
+    <div >
+      <div class="row">
+        <div class="col-6 text-start mt-3">
           <a href="javascript:void(0)" class="btn-icon" data-toggle="tooltip" data-placement="top" title="Share" (click)="openShareDialog(product)" aria-label="'Share ' + product.name">
-            <i class="fa fa-share"></i>
+            <i class="fa fa-share-square-o" ></i>
           </a>
         </div>
-        <div class="col-6 text-end">
-          <button type="button" (click)="addItemToBasket()" class="btn btn-block btn-primary btn-circle btn-icon-left" aria-label="'Add ' + product.name + ' to cart'">
-            <i class="fa fa-shopping-cart"></i> 
+        <div class="col-6 pe-0">
+ 
+          <button type="button" (click)="addItemToBasket()" class="btn btn-primary product-buttons" aria-label="'Add ' + product.name + ' to cart'">
+            <i class="fa fa-cart-plus fa-2x"></i>
+          
           </button>
         </div>
       </div>

@@ -23,7 +23,8 @@ const routes: Routes = [
     path: '',
     component: AdminComponent,
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+     
+      { path: '', component: DashboardComponent, data: { breadcrumb: { skip: false, label: 'لوحة الاحصائات' } } },
       { path: 'dashboard', component: DashboardComponent, data: { breadcrumb: { skip: false, label: 'لوحة الاحصائات' } } },
 
       { path: 'products-list', component: ProductsListComponent ,  data: { breadcrumb: { skip: false, label: 'المنتجات' } } },

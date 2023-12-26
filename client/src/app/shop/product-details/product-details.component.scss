@@ -1,15 +1,30 @@
+/* Update your CSS */
 ::ng-deep.ngx-gallery-thumbnails .ngx-gallery-thumbnail {
-    border: none !important;
+  border: none !important;
 }
+
 ::ng-deep.ngx-gallery-thumbnails .ngx-gallery-thumbnail.ngx-gallery-active {
   border: 1px solid #BF9553!important;
 }
+
+ngx-gallery {
+  max-width: 100%; /* Ensure it doesn't exceed the container width */
+  overflow-x: auto; /* Enable horizontal scrolling on small screens if needed */
+}
+
+/* Ensure images inside ngx-gallery are responsive */
 ngx-gallery img {
   max-width: 100%;
   height: auto;
 }
 
-.product-description img {
-  max-width: 100%;
-  height: auto;
+
+
+
+@media screen and (max-width: 767px) {
+  ::ng-deep img, ::ng-deep svg {
+    width: 300px;
+    display: block; /* Ensure images are block-level elements */
+    margin: 0 auto; /* Center the images horizontally */
+  }
 }

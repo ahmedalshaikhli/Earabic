@@ -31,6 +31,9 @@ export class ShopComponent implements OnInit {
     this.shopParams = shopService.getShopParams();
    
   }
+ 
+
+
 
   ngOnInit(): void {
     this.basket$ = this.basketService.basketSource$;
@@ -38,6 +41,13 @@ export class ShopComponent implements OnInit {
     this.getBrands();
     this.getTypes();
     this.subscribeToBrandSelected();
+  }
+  getBackgroundImage() {
+    if (this.shopParams.sort === 'priceDesc') {
+      return 'url("../../assets/img/priceDesc.png")';
+    } else {
+      return 'url("../../assets/img/priceAsc.png")'; // or whatever default image you want
+    }
   }
 
   getProducts() {
